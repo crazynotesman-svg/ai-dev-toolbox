@@ -6,15 +6,16 @@ import Footer from "@/components/layout/Footer";
 import ToolCard from "@/components/home/ToolCard";
 import JsonLd from "@/components/seo/JsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
-import { getLocalizedTool, getLocalizedCategory } from "@/lib/i18n";
+import { getLocalizedTool, getLocalizedCategory, getHrefLang, getOgLocale } from "@/lib/i18n";
 
 /** 工具索引页 metadata（英文默认） */
 const indexTitle = "All Developer Tools | AI Developer Toolbox";
+const indexDescription =
+  "Free online developer tools: JSON formatter, JSON to TypeScript, JSON to Java, AI JSON analyzer and JWT decoder. All tools run locally in your browser, no registration required.";
 
 export const metadata: Metadata = {
   title: { absolute: indexTitle },
-  description:
-    "Free online developer tools: JSON formatter, JSON to TypeScript, JSON to Java, AI JSON analyzer and JWT decoder. All tools run locally in your browser, no registration required.",
+  description: indexDescription,
   keywords: [
     "online developer tools",
     "JSON tools",
@@ -22,13 +23,22 @@ export const metadata: Metadata = {
     "developer toolbox",
     "AI Developer Toolbox",
   ],
-  alternates: { canonical: "/tools" },
+  alternates: {
+    canonical: "/tools",
+    languages: getHrefLang(DEFAULT_LOCALE, "/tools"),
+  },
   openGraph: {
     type: "website",
+    siteName: SITE_CONFIG.name,
     title: indexTitle,
-    description:
-      "Free online developer tools: JSON formatting, conversion, analysis and security parsing. Browser-based, no registration.",
-    url: "/tools",
+    description: indexDescription,
+    locale: getOgLocale(DEFAULT_LOCALE),
+    url: `${SITE_CONFIG.url}/tools`,
+  },
+  twitter: {
+    card: "summary",
+    title: indexTitle,
+    description: indexDescription,
   },
 };
 

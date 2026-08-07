@@ -3,22 +3,32 @@ import { SITE_CONFIG, DEFAULT_LOCALE } from "@toolbox/shared";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getToolComponent } from "@/components/tools/registry";
 import JsonLd from "@/components/seo/JsonLd";
-import { getLocalizedTool, getUi } from "@/lib/i18n";
+import { getLocalizedTool, getUi, getHrefLang, getOgLocale } from "@/lib/i18n";
 
 const tool = getLocalizedTool("jwt-decoder", DEFAULT_LOCALE)!;
 const ToolComponent = getToolComponent("jwt-decoder")!;
 
-/** 独立 metadata（数据来自 locales 本地化工具） */
+/** 独立 metadata（数据来自 locales；M2.5：hreflang + twitter + OG 补全） */
 export const metadata: Metadata = {
   title: { absolute: tool.seoTitle },
   description: tool.seoDescription,
   keywords: [...tool.keywords],
-  alternates: { canonical: `/tools/${tool.slug}` },
+  alternates: {
+    canonical: `/tools/${tool.slug}`,
+    languages: getHrefLang(DEFAULT_LOCALE, `/tools/${tool.slug}`),
+  },
   openGraph: {
     type: "website",
+    siteName: SITE_CONFIG.name,
     title: tool.seoTitle,
     description: tool.seoDescription,
-    url: `/tools/${tool.slug}`,
+    locale: getOgLocale(DEFAULT_LOCALE),
+    url: `${SITE_CONFIG.url}/tools/${tool.slug}`,
+  },
+  twitter: {
+    card: "summary",
+    title: tool.seoTitle,
+    description: tool.seoDescription,
   },
 };
 

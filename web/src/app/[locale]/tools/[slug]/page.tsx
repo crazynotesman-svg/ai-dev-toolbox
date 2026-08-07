@@ -4,7 +4,7 @@ import { SITE_CONFIG, TOOL_CONFIGS } from "@toolbox/shared";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getToolComponent } from "@/components/tools/registry";
 import JsonLd from "@/components/seo/JsonLd";
-import { getLocalizedTool, getUi } from "@/lib/i18n";
+import { getLocalizedTool, getUi, getHrefLang, getOgLocale, localizedPath } from "@/lib/i18n";
 
 /** 静态导出：动态段必须显式列出所有组合 */
 export const dynamicParams = false;
@@ -24,16 +24,27 @@ export async function generateMetadata({
   const { locale, slug } = await params;
   const tool = getLocalizedTool(slug, locale);
   if (!tool) return { title: "Tool not found" };
+  const canonical = localizedPath(locale, `/tools/${tool.slug}`);
   return {
     title: { absolute: tool.seoTitle },
     description: tool.seoDescription,
     keywords: [...tool.keywords],
-    alternates: { canonical: `/${locale}/tools/${tool.slug}` },
+    alternates: {
+      canonical,
+      languages: getHrefLang(locale, `/tools/${tool.slug}`),
+    },
     openGraph: {
       type: "website",
+      siteName: SITE_CONFIG.name,
       title: tool.seoTitle,
       description: tool.seoDescription,
-      url: `/${locale}/tools/${tool.slug}`,
+      locale: getOgLocale(locale),
+      url: `${SITE_CONFIG.url}${canonical}`,
+    },
+    twitter: {
+      card: "summary",
+      title: tool.seoTitle,
+      description: tool.seoDescription,
     },
   };
 }

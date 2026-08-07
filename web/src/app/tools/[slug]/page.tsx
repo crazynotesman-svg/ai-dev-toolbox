@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { TOOL_CONFIGS, DEFAULT_LOCALE } from "@toolbox/shared";
+import { TOOL_CONFIGS, DEFAULT_LOCALE, SITE_CONFIG } from "@toolbox/shared";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { getLocalizedTool } from "@/lib/i18n";
+import { getLocalizedTool, getHrefLang, getOgLocale } from "@/lib/i18n";
 
 /** 静态导出（output: "export"）下 dynamicParams 必须为 false：未列出的 slug 一律 404 */
 export const dynamicParams = false;
@@ -38,12 +38,20 @@ export async function generateMetadata({
     keywords: [...tool.keywords],
     alternates: {
       canonical: `/tools/${tool.slug}`,
+      languages: getHrefLang(DEFAULT_LOCALE, `/tools/${tool.slug}`),
     },
     openGraph: {
       type: "website",
+      siteName: SITE_CONFIG.name,
       title: tool.seoTitle,
       description: tool.seoDescription,
-      url: `/tools/${tool.slug}`,
+      locale: getOgLocale(DEFAULT_LOCALE),
+      url: `${SITE_CONFIG.url}/tools/${tool.slug}`,
+    },
+    twitter: {
+      card: "summary",
+      title: tool.seoTitle,
+      description: tool.seoDescription,
     },
   };
 }

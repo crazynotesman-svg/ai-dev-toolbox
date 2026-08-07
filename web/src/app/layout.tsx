@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { SITE_CONFIG, DEFAULT_LOCALE } from "@toolbox/shared";
-import { getSite } from "@/lib/i18n";
+import { getSite, getHrefLang, getOgLocale } from "@/lib/i18n";
 import JsonLd from "@/components/seo/JsonLd";
 import "./globals.css";
 
 /**
  * 站点级 metadata（默认语言 = en）
  * 标题模板 / 描述 / 关键词 / Open Graph / Twitter 全部来自 locales en.json
- * M2 将支持多语言：locale 通过 params 传入，此处为默认英文
+ * M2.5：英文首页 hreflang（en/zh-CN/ja + x-default）全语言标注
  */
 const locale = DEFAULT_LOCALE;
 const site = getSite(locale);
@@ -22,13 +22,14 @@ export const metadata: Metadata = {
   keywords: [...site.keywords],
   alternates: {
     canonical: "/",
+    languages: getHrefLang(DEFAULT_LOCALE, "/"),
   },
   openGraph: {
     type: "website",
     siteName: SITE_CONFIG.name,
     title: site.title,
     description: site.description,
-    locale: "en_US",
+    locale: getOgLocale(DEFAULT_LOCALE),
     url: SITE_CONFIG.url,
   },
   twitter: {

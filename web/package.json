@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "npx serve out",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit --incremental false",
     "test": "node --test --experimental-strip-types \"tests/tools/*.test.ts\""
   },
   "dependencies": {

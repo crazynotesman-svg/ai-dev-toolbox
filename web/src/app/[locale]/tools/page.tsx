@@ -6,20 +6,47 @@ import Footer from "@/components/layout/Footer";
 import ToolCard from "@/components/home/ToolCard";
 import JsonLd from "@/components/seo/JsonLd";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
-import { getLocalizedTool, getLocalizedCategory } from "@/lib/i18n";
+import {
+  getLocalizedTool,
+  getLocalizedCategory,
+  getHrefLang,
+  getOgLocale,
+  getHome,
+  getDictionary,
+  localizedPath,
+} from "@/lib/i18n";
 
-/** 多语言工具索引页 metadata */
+/** 多语言工具索引页 metadata（M2.5：全字段来自 locales + hreflang + canonical 自身） */
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  const dict = getDictionary(locale) as { nav: { tools: string }; site: { description: string; keywords: string[] } };
+  const title = `${dict.nav.tools} | ${SITE_CONFIG.name}`;
+  const canonical = localizedPath(locale, "/tools");
   return {
-    title: { absolute: "All Developer Tools | AI Developer Toolbox" },
-    description:
-      "Free online developer tools: JSON formatter, JSON to TypeScript, JSON to Java, AI JSON analyzer and JWT decoder. All tools run locally in your browser.",
-    alternates: { canonical: `/${locale}/tools` },
+    title: { absolute: title },
+    description: dict.site.description,
+    keywords: [...dict.site.keywords],
+    alternates: {
+      canonical,
+      languages: getHrefLang(locale, "/tools"),
+    },
+    openGraph: {
+      type: "website",
+      siteName: SITE_CONFIG.name,
+      title,
+      description: dict.site.description,
+      locale: getOgLocale(locale),
+      url: `${SITE_CONFIG.url}${canonical}`,
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description: dict.site.description,
+    },
   };
 }
 
@@ -33,6 +60,8 @@ export default async function LocaleToolsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const home = getHome(locale);
+  const dict = getDictionary(locale) as { nav: { tools: string } };
   const allTools = TOOL_CATEGORY_ORDER.flatMap((catId) =>
     getToolsByCategory(catId)
       .filter((t) => t.status === "live")
@@ -43,13 +72,13 @@ export default async function LocaleToolsPage({
   const itemListJsonLd = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    name: "AI Developer Toolbox Tools",
+    name: `${SITE_CONFIG.name} ${dict.nav.tools}`,
     itemListElement: allTools.map((tool, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: tool.title,
       description: tool.description,
-      url: `${SITE_CONFIG.url}/${locale}/tools/${tool.slug}`,
+      url: `${SITE_CONFIG.url}${localizedPath(locale, `/tools/${tool.slug}`)}`,
     })),
   };
 
@@ -57,8 +86,8 @@ export default async function LocaleToolsPage({
     <div className="flex min-h-screen flex-col">
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", path: `/${locale}` },
-          { name: "All Tools", path: `/${locale}/tools` },
+          { name: SITE_CONFIG.name, path: localizedPath(locale, "/") },
+          { name: dict.nav.tools, path: localizedPath(locale, "/tools") },
         ]}
       />
       <JsonLd data={itemListJsonLd} />
@@ -67,14 +96,12 @@ export default async function LocaleToolsPage({
         <section className="border-b border-slate-200 bg-slate-50">
           <div className="mx-auto max-w-5xl px-6 py-12">
             <p className="text-sm text-slate-500">
-              Home / <span className="text-slate-700">All Tools</span>
+              {SITE_CONFIG.name} / <span className="text-slate-700">{dict.nav.tools}</span>
             </p>
             <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
-              All Developer Tools
+              {dict.nav.tools}
             </h1>
-            <p className="mt-3 max-w-2xl text-slate-600">
-              Free to use, processed locally in your browser. No registration required.
-            </p>
+            <p className="mt-3 max-w-2xl text-slate-600">{home.toolsSubtitle}</p>
           </div>
         </section>
 
@@ -90,7 +117,7 @@ export default async function LocaleToolsPage({
               <div key={catId} className="mb-12 last:mb-0">
                 <div className="flex items-baseline justify-between">
                   <h2 className="text-xl font-bold text-slate-900">{cat.name}</h2>
-                  <span className="text-sm text-slate-400">{tools.length} tools</span>
+                  <span className="text-sm text-slate-400">{tools.length}</span>
                 </div>
                 <p className="mt-1 text-sm text-slate-500">{cat.description}</p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,8 +130,8 @@ export default async function LocaleToolsPage({
           })}
 
           <div className="mt-8 border-t border-slate-200 pt-6">
-            <Link href={`/${locale}`} className="text-sm text-blue-600 hover:underline">
-              ← Back to Home
+            <Link href={localizedPath(locale, "/")} className="text-sm text-blue-600 hover:underline">
+              ← {SITE_CONFIG.name}
             </Link>
           </div>
         </section>

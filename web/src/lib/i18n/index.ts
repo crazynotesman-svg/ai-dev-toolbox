@@ -176,6 +176,18 @@ export function getHome(locale: string) {
 
 /* ==================== 路径与 SEO ==================== */
 
+/** BCP47 locale → Open Graph locale 格式映射（en_US / zh_CN / ja_JP） */
+const OG_LOCALE_MAP: Record<string, string> = {
+  en: "en_US",
+  "zh-CN": "zh_CN",
+  ja: "ja_JP",
+};
+
+/** 获取某语言的 Open Graph locale 值（未知语言回退 en_US） */
+export function getOgLocale(locale: string): string {
+  return OG_LOCALE_MAP[locale] ?? "en_US";
+}
+
 /**
  * 本地化路径：en → "/tools/x"（无前缀），其他 → "/zh-CN/tools/x"
  * 供 M2 路由分层使用
