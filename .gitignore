@@ -1,0 +1,67 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# wrangler / workers
+.wrangler/
+.dev.vars
+*.dev.vars
+
+# build outputs
+dist/
+build/
+
+# logs
+*.log
+npm-debug.log*
+
+# env
+.env
+.env.*
+!.env.example
+
+# editor / os
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# typescript
+*.tsbuildinfo
+
+# workbuddy 项目数据（不入库）
+.workbuddy/
+
+# playwright 调试目录与快照
+.playwright-cli/
+# 调试快照（保留 .github/workflows/*.yml 与配置 yml）
+d*-*.yml
+d*-before.yml
+d*-after.yml
+d*-err.yml
+d*-ref.yml
+d*-tools.yml
+d*-back.yml
+d*-hdr.yml
+d*-formatter.yml
+d*-decmode.yml
+d*-enc.yml
+d*-dec.yml
+d*-bad.yml
+d*-name.yml
+d*-nav.yml
+d*-related.yml
+d*-type.yml
+web/after-format.yml
+web/err.yml
+web/snap*.yml
+
+# 调试脚本与临时产物
+.fill*.js
+.eval-output.js
+*.png
+*.log

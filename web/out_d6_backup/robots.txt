@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://ai-dev-toolbox.pages.dev/sitemap.xml

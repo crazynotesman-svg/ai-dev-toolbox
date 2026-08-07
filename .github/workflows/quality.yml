@@ -1,0 +1,70 @@
+name: Quality Gate
+
+# 触发：PR 与 main 分支 push（发布前质量门禁）
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: validate → test → lint → typecheck → build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # 1. 检出代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 安装 pnpm 9（与 package.json packageManager 一致）
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.9
+
+      # 3. 安装 Node 22（满足 engines >=20）
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # 4. 安装依赖（lockfile 冻结：确保 CI 与本地一致）
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. 元数据完整性检查（slug 唯一/字段/category/live 三件套）
+      - name: Validate tool configs
+        run: pnpm validate
+
+      # 6. 工具纯函数测试（node --test，65+ 用例）
+      - name: Run tests
+        run: pnpm test
+
+      # 7. ESLint
+      - name: Lint
+        run: pnpm lint
+
+      # 8. TypeScript 类型检查（shared/web/worker）
+      - name: Typecheck
+        run: pnpm typecheck
+
+      # 9. 静态导出构建（产物 web/out）
+      #    注：check 中已含 validate/test/lint/typecheck（&& 链失败即停），
+      #    build 独立执行以生成部署产物并验证 Next 静态导出。
+      - name: Build
+        run: pnpm build
+
+      # 10. 上传构建产物（供后续部署阶段使用；本 workflow 不执行部署）
+      - name: Upload static site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: static-site
+          path: web/out
+          if-no-files-found: error
+          retention-days: 7
