@@ -1,8 +1,7 @@
-"use client";
-
 /**
- * 工具组件 Registry（web 层管理）
- * 映射：tool slug → client 组件
+ * 工具组件 Registry（server 模块）
+ * 映射：tool slug → client 组件引用
+ * 本文件为 server-safe（无 "use client"）：仅引用 client 组件并返回给 server 页面渲染
  * shared 保持纯技术元数据（不含 component 字段），组件映射统一在此维护
  * 组件接收可选 t prop（UI 文案字典），用于多语言
  */
