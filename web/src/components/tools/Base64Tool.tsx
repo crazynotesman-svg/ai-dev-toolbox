@@ -30,7 +30,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
       mode === "encode" ? encodeBase64(input) : decodeBase64(input);
     if (result.ok) {
       setOutput(result.output);
-      setNotice({ type: "success", text: `${mode === "encode" ? "编码" : "解码"}完成 ✓` });
+      setNotice({ type: "success", text: `${mode === "encode" ? "Encoded" : "Decoded"} ✓` });
     } else {
       setOutput("");
       setNotice({ type: "error", text: result.error });
@@ -56,7 +56,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
     setInput(SAMPLE_TEXT);
     setMode("encode");
     setOutput("");
-    setNotice({ type: "info", text: "已载入示例文本，点击「转换」试试" });
+    setNotice({ type: "info", text: "Sample loaded — click Convert to try" });
   }, []);
 
   const clearAll = useCallback(() => {
@@ -84,7 +84,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
                   : "bg-white text-slate-600 hover:bg-slate-100"
               }`}
             >
-              {m === "encode" ? "编码 → Base64" : "解码 → 文本"}
+              {m === "encode" ? "Encode → Base64" : "Decode → Text"}
             </button>
           ))}
         </div>
@@ -93,7 +93,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
           onClick={convert}
           className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
         >
-          {mode === "encode" ? "编码" : "解码"}
+          {mode === "encode" ? "Encode" : "Decode"}
         </button>
         <button
           onClick={copyOutput}
@@ -122,7 +122,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
       <div className="grid gap-4 p-4 lg:grid-cols-2">
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-medium text-slate-700">
-            {mode === "encode" ? "文本输入" : "Base64 输入"}
+            {mode === "encode" ? "Text Input" : "Base64 Input"}
           </label>
           <textarea
             value={input}
@@ -134,21 +134,21 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
             spellCheck={false}
             placeholder={
               mode === "encode"
-                ? "输入要编码的文本（支持中文与 emoji）"
-                : "粘贴 Base64 字符串"
+                ? "Enter text to encode (supports Chinese and emoji)"
+                : "Paste Base64 string"
             }
             className="h-64 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
         </div>
         <div className="flex flex-col">
           <label className="mb-2 text-sm font-medium text-slate-700">
-            {mode === "encode" ? "Base64 输出" : "文本输出"}
+            {mode === "encode" ? "Base64 Output" : "Text Output"}
           </label>
           <textarea
             ref={outputRef}
             value={output}
             readOnly
-            placeholder="转换结果将显示在这里"
+            placeholder="Conversion result will appear here"
             className="h-64 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none"
           />
         </div>
@@ -158,7 +158,7 @@ export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
       <div className="flex flex-wrap items-center gap-4 border-t border-slate-200 px-4 py-3">
         <span className="text-xs text-slate-400">
           {inputStats
-            ? `输入 ${inputStats.lines} 行 · ${(inputStats.bytes / 1024).toFixed(1)} KB`
+            ? `${inputStats.lines} lines · ${(inputStats.bytes / 1024).toFixed(1)} KB`
             : ui.inputStatsEmpty}
         </span>
         <span className="text-xs text-slate-400">{ui.localOnly}</span>

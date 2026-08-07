@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, TOOL_CATEGORY_ORDER, getToolsByCategory, getPopularTools } from "@toolbox/shared";
+import { TOOL_CATEGORY_ORDER, getToolsByCategory, getPopularTools } from "@toolbox/shared";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/home/Hero";
@@ -8,25 +8,33 @@ import FaqSection from "@/components/tools/FaqSection";
 import { getLocalizedTool, getLocalizedCategory, getHome, getHomeFaqs } from "@/lib/i18n";
 
 /**
- * 首页（默认英文）：Hero → Popular Tools → Tool Categories → Why Choose → FAQ
- * 全部数据驱动：技术元数据来自 shared，展示内容来自 locales
+ * 多语言首页（[locale]/page.tsx）
+ * 英文由根路由 app/page.tsx 承担，本路由只生成非英文语言
  */
-export default function Home() {
-  const home = getHome(DEFAULT_LOCALE);
-  const homeFaqs = getHomeFaqs(DEFAULT_LOCALE);
+export async function generateStaticParams() {
+  // 只生成 zh-CN / ja（非英文；英文走根路由）
+  return [{ locale: "zh-CN" }, { locale: "ja" }];
+}
 
-  // 热门工具（shared priority 降序）
+export default async function LocaleHomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const home = getHome(locale);
+  const homeFaqs = getHomeFaqs(locale);
+
   const popularTools = getPopularTools(4)
-    .map((t) => getLocalizedTool(t.slug, DEFAULT_LOCALE))
+    .map((t) => getLocalizedTool(t.slug, locale))
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
 
   return (
     <div className="flex min-h-screen flex-col">
-      <Header />
+      <Header locale={locale} />
       <main className="flex-1">
-        <Hero />
+        <Hero locale={locale} />
 
-        {/* Popular Tools（热门工具） */}
         {popularTools.length > 0 && (
           <section className="mx-auto max-w-5xl px-6 py-8">
             <h2 className="text-2xl font-bold tracking-tight text-slate-900">{home.popularTitle}</h2>
@@ -39,11 +47,10 @@ export default function Home() {
           </section>
         )}
 
-        {/* Tool Categories（分类导航锚点，修复 #categories 死链） */}
         <section id="categories" className="mx-auto max-w-5xl px-6 py-8">
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             {TOOL_CATEGORY_ORDER.map((catId) => {
-              const cat = getLocalizedCategory(catId, DEFAULT_LOCALE);
+              const cat = getLocalizedCategory(catId, locale);
               const count = getToolsByCategory(catId).filter((t) => t.status === "live").length;
               return (
                 <a
@@ -60,7 +67,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* All Tools（工具分类 + 工具卡） */}
         <section id="tools" className="mx-auto max-w-5xl px-6 py-8">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">{home.toolsTitle}</h2>
           <p className="mt-2 text-slate-500">{home.toolsSubtitle}</p>
@@ -68,10 +74,10 @@ export default function Home() {
           {TOOL_CATEGORY_ORDER.map((catId) => {
             const tools = getToolsByCategory(catId)
               .filter((t) => t.status === "live")
-              .map((t) => getLocalizedTool(t.slug, DEFAULT_LOCALE))
+              .map((t) => getLocalizedTool(t.slug, locale))
               .filter((t): t is NonNullable<typeof t> => Boolean(t));
             if (tools.length === 0) return null;
-            const cat = getLocalizedCategory(catId, DEFAULT_LOCALE);
+            const cat = getLocalizedCategory(catId, locale);
             return (
               <div key={catId} id={catId} className="mt-10 scroll-mt-20">
                 <h3 className="text-lg font-semibold text-slate-900">{cat.name}</h3>
@@ -88,7 +94,6 @@ export default function Home() {
 
         <Advantages />
 
-        {/* 首页 FAQ（复用 FaqSection，自动生成 FAQPage JSON-LD） */}
         <section className="mx-auto max-w-5xl px-6 py-8">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">{home.faqTitle}</h2>
           <p className="mt-2 text-slate-500">{home.faqSubtitle}</p>
@@ -97,7 +102,7 @@ export default function Home() {
           </div>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }

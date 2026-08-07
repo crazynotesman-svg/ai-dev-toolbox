@@ -2,9 +2,9 @@ import Link from "next/link";
 import { DEFAULT_LOCALE, TOOL_CATEGORY_ORDER } from "@toolbox/shared";
 import { getDictionary, getLocalizedCategory } from "@/lib/i18n";
 
-/** 页脚 - 品牌 + 分类入口 + 版权（文案来自 locales 字典） */
-export default function Footer() {
-  const dict = getDictionary(DEFAULT_LOCALE) as {
+/** 页脚 - 品牌 + 分类入口 + 版权（文案来自 locales 字典，支持多语言） */
+export default function Footer({ locale = DEFAULT_LOCALE }: { locale?: string }) {
+  const dict = getDictionary(locale) as {
     site: { name: string };
     footer: {
       about: string;
@@ -16,6 +16,7 @@ export default function Footer() {
     };
   };
   const footer = dict.footer;
+  const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
 
   return (
     <footer className="border-t border-slate-200 bg-slate-50">
@@ -29,8 +30,8 @@ export default function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-slate-500">
             {TOOL_CATEGORY_ORDER.map((catId) => (
               <li key={catId}>
-                <Link href={`/#${catId}`} className="transition hover:text-blue-600">
-                  {getLocalizedCategory(catId, DEFAULT_LOCALE).name}
+                <Link href={`${prefix}/#${catId}`} className="transition hover:text-blue-600">
+                  {getLocalizedCategory(catId, locale).name}
                 </Link>
               </li>
             ))}
@@ -40,12 +41,12 @@ export default function Footer() {
           <p className="text-sm font-medium text-slate-700">{footer.aboutTitle}</p>
           <ul className="mt-3 space-y-2 text-sm text-slate-500">
             <li>
-              <Link href="/" className="transition hover:text-blue-600">
+              <Link href={`${prefix}/`} className="transition hover:text-blue-600">
                 {footer.home}
               </Link>
             </li>
             <li>
-              <Link href="/#advantages" className="transition hover:text-blue-600">
+              <Link href={`${prefix}/#advantages`} className="transition hover:text-blue-600">
                 {footer.whyUs}
               </Link>
             </li>

@@ -2,9 +2,9 @@ import Link from "next/link";
 import { DEFAULT_LOCALE, LIVE_TOOLS } from "@toolbox/shared";
 import { getDictionary, format } from "@/lib/i18n";
 
-/** Hero 首屏 - 品牌主张 + 双 CTA（文案来自 locales 字典） */
-export default function Hero() {
-  const dict = getDictionary(DEFAULT_LOCALE) as {
+/** Hero 首屏 - 品牌主张 + 双 CTA（文案来自 locales 字典，支持多语言） */
+export default function Hero({ locale = DEFAULT_LOCALE }: { locale?: string }) {
+  const dict = getDictionary(locale) as {
     hero: {
       badge: string;
       title: string;

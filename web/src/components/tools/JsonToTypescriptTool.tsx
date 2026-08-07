@@ -47,7 +47,7 @@ export default function JsonToTypescriptTool({ t }: { t?: Partial<UiText> }) {
     const result = jsonToTypeScript(input, { rootName, style });
     if (result.ok) {
       setOutput(result.output);
-      setNotice({ type: "success", text: "类型生成成功 ✓" });
+      setNotice({ type: "success", text: "Types generated ✓" });
     } else {
       setOutput("");
       setNotice({ type: "error", text: result.error });
@@ -72,7 +72,7 @@ export default function JsonToTypescriptTool({ t }: { t?: Partial<UiText> }) {
   const loadSample = useCallback(() => {
     setInput(SAMPLE);
     setOutput("");
-    setNotice({ type: "info", text: "已载入示例数据，点击「生成类型」试试" });
+    setNotice({ type: "info", text: "Sample loaded — click Generate Types to try" });
   }, []);
 
   const clearAll = useCallback(() => {
@@ -145,7 +145,7 @@ export default function JsonToTypescriptTool({ t }: { t?: Partial<UiText> }) {
       {/* 输入 / 输出 */}
       <div className="grid gap-4 p-4 lg:grid-cols-2">
         <div className="flex flex-col">
-          <label className="mb-2 text-sm font-medium text-slate-700">JSON 输入</label>
+          <label className="mb-2 text-sm font-medium text-slate-700">JSON Input</label>
           <textarea
             value={input}
             onChange={(e) => {
@@ -153,17 +153,17 @@ export default function JsonToTypescriptTool({ t }: { t?: Partial<UiText> }) {
               setNotice(null);
             }}
             spellCheck={false}
-            placeholder='粘贴 JSON，例如：{"name":"toolbox"}'
+            placeholder='Paste JSON, e.g. {"name":"toolbox"}'
             className="h-72 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
         </div>
         <div className="flex flex-col">
-          <label className="mb-2 text-sm font-medium text-slate-700">TypeScript 输出</label>
+          <label className="mb-2 text-sm font-medium text-slate-700">TypeScript Output</label>
           <textarea
             ref={outputRef}
             value={output}
             readOnly
-            placeholder="生成的 interface / type 将显示在这里"
+            placeholder="Generated interface / type will appear here"
             className="h-72 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none"
           />
         </div>

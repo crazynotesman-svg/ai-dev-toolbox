@@ -195,11 +195,11 @@ export function locateJsonError(input: string): number {
 /** 解析 JSON 并返回带错误定位的结果 */
 function parse(input: string): { value: unknown } | { error: JsonError } {
   if (input.trim() === "") {
-    return { error: { code: "empty", message: "输入内容为空，请粘贴 JSON 数据" } };
+    return { error: { code: "empty", message: "Input is empty, please paste JSON data" } };
   }
   if (byteLength(input) > MAX_INPUT_BYTES) {
     return {
-      error: { code: "too-large", message: "输入超过 10MB 限制，请减小数据量后重试" },
+      error: { code: "too-large", message: "Input exceeds the 10MB limit, please reduce the data and retry" },
     };
   }
   try {
@@ -207,7 +207,7 @@ function parse(input: string): { value: unknown } | { error: JsonError } {
   } catch (err) {
     // 新版 V8 消息无位置，用内置检查器精确定位
     const position = locateJsonError(input);
-    const raw = err instanceof Error ? err.message : "无法解析的 JSON";
+    const raw = err instanceof Error ? err.message : "Unable to parse JSON";
     if (position < 0) {
       return { error: { code: "invalid", message: raw, position: undefined } };
     }

@@ -163,7 +163,7 @@ export function explainJson(input: string): JsonExplainResultType {
   const startedAt = performance.now();
 
   if (isEmpty(input)) {
-    return { ok: false, error: { message: "输入内容为空，请粘贴 JSON 数据" } };
+    return { ok: false, error: { message: "Input is empty, please paste JSON data" } };
   }
   const validation = validateJson(input);
   if (!validation.ok) {
@@ -185,7 +185,7 @@ export function explainJson(input: string): JsonExplainResultType {
   try {
     value = JSON.parse(input);
   } catch {
-    return { ok: false, error: { message: "无法解析的 JSON" } };
+    return { ok: false, error: { message: "Unable to parse JSON" } };
   }
 
   const rootType = typeName(value);

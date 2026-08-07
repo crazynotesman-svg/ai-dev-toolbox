@@ -15,9 +15,9 @@ export type Base64Result = { ok: true; output: string } | { ok: false; error: st
 
 /** 文本 → Base64（UTF-8 安全：先转字节再编码） */
 export function encodeBase64(text: string): Base64Result {
-  if (!text) return { ok: false, error: "输入内容为空，请输入要编码的文本" };
+  if (!text) return { ok: false, error: "Input is empty, please enter text to encode" };
   if (byteLength(text) > MAX_INPUT_BYTES) {
-    return { ok: false, error: `输入超过 ${Math.round(MAX_INPUT_BYTES / 1024 / 1024)}MB 上限，请裁剪后重试` };
+    return { ok: false, error: `Input exceeds the ${Math.round(MAX_INPUT_BYTES / 1024 / 1024)}MB limit, please trim and retry` };
   }
   try {
     const bytes = new TextEncoder().encode(text);
@@ -29,7 +29,7 @@ export function encodeBase64(text: string): Base64Result {
     const base64 = btoa(binary);
     return { ok: true, output: base64 };
   } catch {
-    return { ok: false, error: "编码失败：无法处理的输入内容" };
+    return { ok: false, error: "Encoding failed: unable to process input" };
   }
 }
 
@@ -46,14 +46,14 @@ function isValidBase64(input: string): boolean {
 /** Base64 → 文本（UTF-8 安全：解码字节后按 UTF-8 还原） */
 export function decodeBase64(base64: string): Base64Result {
   const input = base64.trim();
-  if (!input) return { ok: false, error: "输入内容为空，请输入要解码的 Base64" };
+  if (!input) return { ok: false, error: "Input is empty, please enter Base64 to decode" };
   if (byteLength(input) > MAX_INPUT_BYTES) {
-    return { ok: false, error: `输入超过 ${Math.round(MAX_INPUT_BYTES / 1024 / 1024)}MB 上限，请裁剪后重试` };
+    return { ok: false, error: `Input exceeds the ${Math.round(MAX_INPUT_BYTES / 1024 / 1024)}MB limit, please trim and retry` };
   }
   if (!isValidBase64(input)) {
     return {
       ok: false,
-      error: "非法 Base64：仅允许 A-Z a-z 0-9 + / 与末尾 = 填充（长度须为 4 的倍数）",
+      error: "Invalid Base64: only A-Z a-z 0-9 + / and trailing = padding allowed (length must be a multiple of 4)",
     };
   }
   try {
@@ -63,6 +63,6 @@ export function decodeBase64(base64: string): Base64Result {
     const text = new TextDecoder("utf-8", { fatal: false }).decode(bytes);
     return { ok: true, output: text };
   } catch {
-    return { ok: false, error: "解码失败：Base64 内容无法解析" };
+    return { ok: false, error: "Decode failed: Base64 content could not be parsed" };
   }
 }

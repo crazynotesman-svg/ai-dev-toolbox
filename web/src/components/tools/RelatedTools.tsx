@@ -5,11 +5,18 @@ import { getLocalizedTool } from "@/lib/i18n";
 /**
  * 相关工具交叉链接：展示其他已上线（live）工具
  * 用于工具页 SEO 内部链接（提升站内权重传递与用户浏览深度）
- * 数据来自本地化工具（默认英文），语言由站点 locale 决定
+ * 支持多语言：URL 带 locale 前缀，文案来自对应语言字典
  */
-export default function RelatedTools({ currentSlug }: { currentSlug: string }) {
+export default function RelatedTools({
+  currentSlug,
+  locale = DEFAULT_LOCALE,
+}: {
+  currentSlug: string;
+  locale?: string;
+}) {
+  const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
   const related = LIVE_TOOLS.filter((tool) => tool.slug !== currentSlug)
-    .map((tool) => getLocalizedTool(tool.slug, DEFAULT_LOCALE))
+    .map((tool) => getLocalizedTool(tool.slug, locale))
     .filter((t): t is NonNullable<typeof t> => Boolean(t));
   if (related.length === 0) return null;
 
@@ -22,7 +29,7 @@ export default function RelatedTools({ currentSlug }: { currentSlug: string }) {
           {related.map((tool) => (
             <Link
               key={tool.slug}
-              href={`/tools/${tool.slug}`}
+              href={`${prefix}/tools/${tool.slug}`}
               className="group rounded-xl border border-slate-200 bg-white p-5 transition hover:border-blue-400 hover:shadow-md"
             >
               <h3 className="font-semibold text-slate-900 group-hover:text-blue-600">

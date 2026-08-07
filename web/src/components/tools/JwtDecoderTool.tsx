@@ -30,7 +30,7 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
     setResult(r);
     setNotice(
       r.ok
-        ? { type: "success", text: "解析完成 ✓" }
+        ? { type: "success", text: "Decoded ✓" }
         : { type: "error", text: r.error },
     );
   }, [input]);
@@ -58,7 +58,7 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
             onClick={decode}
             className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
           >
-            解析 Token
+            Decode Token
           </button>
           <button
             onClick={loadDemo}
@@ -79,11 +79,11 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
                 : "bg-slate-100 text-slate-500"
             }`}
           >
-            {isFormatted ? "格式检测：✓ 标准 JWT" : "格式检测：待输入 / 非标准格式"}
+            {isFormatted ? "Format: ✓ Valid JWT" : "Format: pending / invalid"}
           </span>
         </div>
         <div className="p-4">
-          <label className="mb-2 block text-sm font-medium text-slate-700">JWT Token 输入</label>
+          <label className="mb-2 block text-sm font-medium text-slate-700">JWT Token Input</label>
           <textarea
             value={input}
             onChange={(e) => {
@@ -92,7 +92,7 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
               setNotice(null);
             }}
             spellCheck={false}
-            placeholder="粘贴 JWT Token（header.payload.signature），例如 eyJhbGciOi... .eyJzdWIi... .SflKxwRJSMe..."
+            placeholder="Paste JWT token (header.payload.signature), e.g. eyJhbGciOi... .eyJzdWIi... .SflKxwRJSMe..."
             className="h-32 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
           <div className="mt-2 flex items-center gap-4">
@@ -116,7 +116,7 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
           {/* 安全检查 */}
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-              <h3 className="font-semibold text-slate-900">安全检查</h3>
+              <h3 className="font-semibold text-slate-900">Security Check</h3>
             </div>
             <div className="space-y-2 p-4">
               {token.checks.map((check) => (
@@ -187,15 +187,15 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
             </div>
             <div className="p-4">
               <p className="break-all font-mono text-sm text-slate-700">
-                {token.signature || "（空签名 — 常见于 alg=none 攻击）"}
+                {token.signature || "(empty signature — common in alg=none attacks)"}
               </p>
               {token.signature && (
                 <p className="mt-2 font-mono text-xs text-slate-400">
-                  HEX（前 16 字节）：{token.signatureHex}
+                  HEX (first 16 bytes): {token.signatureHex}
                 </p>
               )}
               <p className="mt-2 text-xs text-slate-400">
-                本工具不验证签名真实性（需密钥）；Signature 仅作展示。
+                This tool does not verify signature authenticity (requires a secret); Signature is shown for display only.
               </p>
             </div>
           </div>
@@ -203,14 +203,14 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
           {/* 时间分析 */}
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <div className="border-b border-slate-200 bg-slate-50 px-4 py-3">
-              <h3 className="font-semibold text-slate-900">时间分析（Asia/Shanghai）</h3>
+              <h3 className="font-semibold text-slate-900">Time Analysis (Asia/Shanghai)</h3>
             </div>
             <div className="p-4">
-              <TimeRow label="签发时间 iat" value={token.iatReadable} />
-              <TimeRow label="过期时间 exp" value={token.expReadable} />
+              <TimeRow label="Issued At (iat)" value={token.iatReadable} />
+              <TimeRow label="Expiration (exp)" value={token.expReadable} />
               <TimeRow
-                label="过期状态"
-                value={token.isExpired ? "已过期" : token.expiresIn ?? "未设置 exp"}
+                label="Expiry Status"
+                value={token.isExpired ? "Expired" : token.expiresIn ?? "No exp set"}
               />
             </div>
           </div>

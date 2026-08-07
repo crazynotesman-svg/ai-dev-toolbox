@@ -166,7 +166,7 @@ export function jsonToTypeScript(
   };
 
   if (isEmpty(input)) {
-    return { ok: false, error: "输入内容为空，请粘贴 JSON 数据" };
+    return { ok: false, error: "Input is empty, please paste JSON data" };
   }
   const validation = validateJson(input);
   if (!validation.ok) {
@@ -177,7 +177,7 @@ export function jsonToTypeScript(
   try {
     value = JSON.parse(input);
   } catch {
-    return { ok: false, error: "无法解析的 JSON" };
+    return { ok: false, error: "Unable to parse JSON" };
   }
 
   const rootTypeName = dedupe(toTypeName(opts.rootName), new Set());

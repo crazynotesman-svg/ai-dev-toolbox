@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { DEFAULT_LOCALE } from "@toolbox/shared";
 import type { LocalizedTool } from "@/lib/i18n";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -33,7 +34,7 @@ export interface ContentSectionItem {
 /**
  * 工具页通用骨架：Hero → 工具区域 → 功能介绍 → 使用教程 → FAQ → 相关工具
  * 统一注入 BreadcrumbList JSON-LD（站点级 SEO，不复制到各页）
- * 接收 LocalizedTool（技术元数据 + 本地化内容），语言由数据源决定
+ * 接收 LocalizedTool（技术元数据 + 本地化内容）与 locale（默认 en）
  */
 export default function ToolPageShell({
   tool,
@@ -41,6 +42,7 @@ export default function ToolPageShell({
   features,
   guide,
   faqs,
+  locale = DEFAULT_LOCALE,
 }: {
   tool: LocalizedTool;
   /** 工具交互区（client component） */
@@ -51,18 +53,22 @@ export default function ToolPageShell({
   guide: ContentSectionItem[];
   /** FAQ */
   faqs: FaqItem[];
+  /** 语言（默认 en） */
+  locale?: string;
 }) {
+  const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* 面包屑结构化数据：首页 / 工具 / 当前工具 */}
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", path: "/" },
-          { name: "All Tools", path: "/tools" },
-          { name: tool.title, path: `/tools/${tool.slug}` },
+          { name: "Home", path: `${prefix}/` },
+          { name: "All Tools", path: `${prefix}/tools` },
+          { name: tool.title, path: `${prefix}/tools/${tool.slug}` },
         ]}
       />
-      <Header />
+      <Header locale={locale} />
       <main className="flex-1">
         <ToolHero tool={tool} />
         {/* 工具交互区 */}
@@ -85,9 +91,9 @@ export default function ToolPageShell({
         {/* FAQ */}
         <FaqSection items={faqs} />
         {/* 相关工具交叉链接（SEO 内部链接） */}
-        <RelatedTools currentSlug={tool.slug} />
+        <RelatedTools currentSlug={tool.slug} locale={locale} />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </div>
   );
 }
