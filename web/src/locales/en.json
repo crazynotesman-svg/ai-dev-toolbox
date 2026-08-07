@@ -1,0 +1,225 @@
+{
+  "site": {
+    "name": "AI Developer Toolbox",
+    "title": "AI Developer Toolbox - Free Online Developer Tools & AI Utilities",
+    "description": "Free AI-powered developer tools including JSON formatter, JWT decoder, code converters and productivity utilities. Fast, private and browser-based.",
+    "tagline": "Free developer tools that run entirely in your browser",
+    "keywords": ["JSON formatter", "JWT decoder", "online developer tools", "AI tools", "code converter", "Base64 encoder"]
+  },
+  "nav": {
+    "tools": "All Tools",
+    "categories": "Categories",
+    "advantages": "Why Us",
+    "language": "Language"
+  },
+  "hero": {
+    "badge": "{count} tools · always updating",
+    "title": "AI-Powered Developer Tools",
+    "subtitle": "Format, convert, decode and analyze code instantly. Fast, private and 100% browser-based — your data never leaves your device.",
+    "ctaPrimary": "Get Started",
+    "ctaSecondary": "Learn More",
+    "features": ["Fast", "Private", "Browser-based", "AI utilities"]
+  },
+  "home": {
+    "popularTitle": "Popular Tools",
+    "popularSubtitle": "Most-used tools by developers",
+    "toolsTitle": "All Tools",
+    "toolsSubtitle": "Free to use, always updated",
+    "categoriesTitle": "Tool Categories",
+    "categoriesSubtitle": "Browse tools by category",
+    "faqTitle": "Frequently Asked Questions",
+    "faqSubtitle": "Everything you need to know about AI Developer Toolbox"
+  },
+  "categories": {
+    "json": { "name": "JSON Tools", "description": "Format, validate, convert and analyze JSON" },
+    "developer": { "name": "Developer Tools", "description": "Encoding, decoding and everyday utilities" },
+    "security": { "name": "Security Tools", "description": "Token and authentication parsing" }
+  },
+  "tools": {
+    "json-formatter": {
+      "title": "JSON Formatter",
+      "description": "Format, minify and validate JSON",
+      "seoTitle": "JSON Formatter - Beautify, Minify & Validate | AI Developer Toolbox",
+      "seoDescription": "Free online JSON formatter: beautify, minify and validate JSON with error line/column highlighting. Supports large files, 100% browser-based.",
+      "keywords": ["JSON formatter", "JSON beautifier", "JSON minify", "JSON validator", "JSON prettify"],
+      "features": [
+        { "title": "JSON Formatting", "body": "Instantly beautify compressed or messy JSON with 2-space indentation. Clear hierarchy makes it easy to inspect data structures and field relationships." },
+        { "title": "JSON Minify", "body": "Remove all unnecessary whitespace and line breaks to compress JSON into a single line. Ideal for reducing storage, logs and API payload sizes." },
+        { "title": "JSON Validation", "body": "Strict syntax validation with error type, line number and column number highlighting, so you can locate and fix issues quickly." },
+        { "title": "Local Processing · Private", "body": "All processing happens locally in your browser. Your data is never uploaded to any server, safe for sensitive business data." }
+      ],
+      "guide": [
+        { "title": "Step 1: Paste your JSON", "body": "Paste JSON into the input area, or click \"Load Sample\" to try it instantly." },
+        { "title": "Step 2: Choose an action", "body": "Click \"Format\" to beautify, \"Minify\" for compact single-line output, or \"Validate\" to check syntax." },
+        { "title": "Step 3: Copy the result", "body": "The result appears in the output area. Click \"Copy Result\" to paste it into your code or documents." }
+      ],
+      "faqs": [
+        { "question": "Is this JSON formatter free?", "answer": "Yes, completely free with no registration or usage limits. Just open and use." },
+        { "question": "Will my JSON data be uploaded to a server?", "answer": "No. Formatting, minifying and validation all happen locally in your browser. Your data never leaves your device." },
+        { "question": "What should I do if validation reports a syntax error?", "answer": "The tool highlights the exact line and column of the error. Common issues include missing commas, mismatched quotes and trailing commas." },
+        { "question": "How large a JSON file can I process?", "answer": "The input limit is 10MB per request, which covers most daily use cases. For very large files, consider trimming them first." }
+      ]
+    },
+    "json-to-typescript": {
+      "title": "JSON to TypeScript",
+      "description": "Generate TypeScript types from JSON",
+      "seoTitle": "JSON to TypeScript Type Generator | AI Developer Toolbox",
+      "seoDescription": "Convert JSON to TypeScript interface/type definitions online. Supports nested objects, arrays, optional fields and naming strategies.",
+      "keywords": ["JSON to TypeScript", "TypeScript type generator", "interface generator", "JSON to TS"],
+      "features": [
+        { "title": "Automatic Type Generation", "body": "Paste JSON to generate corresponding TypeScript interface or type definitions, covering strings, numbers, booleans, null, arrays and nested objects." },
+        { "title": "Nested Object Splitting", "body": "Nested objects are split into independently named interfaces with type-safe field references for clean, maintainable structures." },
+        { "title": "Smart Array Inference", "body": "Homogeneous arrays infer to single-element arrays (Item[]), while heterogeneous arrays generate union types ((string | number)[])." },
+        { "title": "Custom Names & Styles", "body": "Customize the root interface name and switch between interface/type output styles to match your project conventions." }
+      ],
+      "guide": [
+        { "title": "Step 1: Paste JSON", "body": "Paste JSON data into the input area, or click \"Load Sample\" to try it instantly." },
+        { "title": "Step 2: Configure options", "body": "Set a custom root type name (default RootObject) and choose interface or type output style." },
+        { "title": "Step 3: Generate and copy", "body": "Click \"Generate Types\" to get TypeScript definitions, then \"Copy Result\" to paste into your .ts file." }
+      ],
+      "faqs": [
+        { "question": "Is the JSON to TypeScript tool free?", "answer": "Yes, completely free with no registration or usage limits." },
+        { "question": "Will my data be sent to a server?", "answer": "No. Parsing and type generation happen locally in your browser. Your data never leaves your device." },
+        { "question": "What if array elements have different types?", "answer": "The tool automatically generates a union type array, e.g. [1, \"a\", true] becomes (number | string | boolean)[], covering all element types." },
+        { "question": "Which JSON value types are supported?", "answer": "string, number, boolean, null, arrays, nested objects and empty objects (Record<string, unknown>) — the full JSON spec." }
+      ]
+    },
+    "json-to-java": {
+      "title": "JSON to Java",
+      "description": "Generate Java POJO classes from JSON",
+      "seoTitle": "JSON to Java POJO Generator | AI Developer Toolbox",
+      "seoDescription": "Convert JSON to Java POJO classes online. Automatic field type mapping, nested structures and collection support, ready for your project.",
+      "keywords": ["JSON to Java", "POJO generator", "Java class generator", "JSON to Java bean"],
+      "features": [
+        { "title": "POJO Generation", "body": "Paste JSON to generate matching Java classes with intelligent type mapping: string to String, int to Integer/Long, decimal to Double, boolean to Boolean." },
+        { "title": "Nested Object Splitting", "body": "Nested objects become inner static classes, keeping the hierarchy clear with type-safe field references." },
+        { "title": "List Generic Mapping", "body": "Object arrays map to List<ClassName>, primitive arrays to List<String>/List<Integer>, and heterogeneous arrays degrade to List<Object>." },
+        { "title": "Getter/Setter Generation", "body": "Every field gets standard getXxx()/setXxx() methods following JavaBean conventions, ready for Jackson/Gson serialization." }
+      ],
+      "guide": [
+        { "title": "Step 1: Paste JSON", "body": "Paste JSON data into the input area, or click \"Load Sample\" to try it instantly." },
+        { "title": "Step 2: Set class name", "body": "Customize the root class name (default RootObject); the generated output uses it as the main class name." },
+        { "title": "Step 3: Generate and copy", "body": "Click \"Generate Java Classes\" to get POJO code, then \"Copy Result\" to paste into your Java project." }
+      ],
+      "faqs": [
+        { "question": "Is the JSON to Java tool free?", "answer": "Yes, completely free with no registration or usage limits." },
+        { "question": "Will my data be sent to a server?", "answer": "No. Parsing and class generation happen locally in your browser. Your data never leaves your device." },
+        { "question": "Can I use the generated classes directly?", "answer": "Yes. They are standard JavaBeans (POJOs) with private fields and getter/setter methods, ready for Jackson, Gson and similar frameworks." },
+        { "question": "What if a field name conflicts with a Java keyword?", "answer": "The tool automatically appends an underscore suffix (e.g. class becomes class_) to keep the generated code compilable." }
+      ]
+    },
+    "jwt-decoder": {
+      "title": "JWT Decoder",
+      "description": "Decode JWT header and payload",
+      "seoTitle": "JWT Decoder - Decode Header & Payload Online | AI Developer Toolbox",
+      "seoDescription": "Decode JWT tokens online: read the header and payload, check algorithm, expiration and issuer. Fully client-side with security checks.",
+      "keywords": ["JWT decoder", "JWT decode", "JWT parser", "token decoder", "JWT expiry"],
+      "features": [
+        { "title": "Format Detection & Parsing", "body": "Automatically recognizes standard JWT (header.payload.signature), decodes header and payload into readable JSON, and displays the signature." },
+        { "title": "exp / iat Analysis", "body": "Reads exp (expiration) and iat (issued at) claims, converts them to readable time, and calculates expiry status and remaining validity." },
+        { "title": "Security Checkup", "body": "Runs 6 security checks: expired, missing exp, alg=none (high risk), missing iat/iss, plus an overall health indicator." },
+        { "title": "Private · Local Parsing", "body": "Tokens are parsed entirely in your browser and never sent to any server, safe for real production tokens." }
+      ],
+      "guide": [
+        { "title": "Step 1: Paste your token", "body": "Paste a JWT token into the input area, or click \"Load Demo Token\" (locally constructed, not a real credential)." },
+        { "title": "Step 2: View the result", "body": "Click \"Decode Token\" to view the header, payload, signature, time analysis and security check results." },
+        { "title": "Step 3: Identify risks", "body": "Focus on danger (red) and warning (yellow) items in the security checks, such as alg=none or expired tokens." }
+      ],
+      "faqs": [
+        { "question": "Is the JWT decoder free?", "answer": "Yes, completely free with no registration or usage limits." },
+        { "question": "Will my token be sent to a server?", "answer": "No. All parsing happens locally in your browser. Tokens never leave your device, safe for real production credentials." },
+        { "question": "What does alg=none mean?", "answer": "alg=none means the token has no signature, so attackers can forge tokens arbitrarily. Real services must reject alg=none; the tool flags it as high risk." },
+        { "question": "Can it verify the signature's authenticity?", "answer": "No. Signature verification requires the server-side secret. This is a static parsing tool that displays the signature only." }
+      ]
+    },
+    "json-explain": {
+      "title": "AI JSON Analyzer",
+      "description": "Analyze JSON structure and security risks",
+      "seoTitle": "AI JSON Analyzer - Structure & Security Check | AI Developer Toolbox",
+      "seoDescription": "Analyze JSON online: structure, field types, nesting depth and sensitive-field risk detection. 100% browser-based, free to use.",
+      "keywords": ["JSON analyzer", "JSON structure analysis", "JSON security check", "sensitive data detection", "JSON explainer"],
+      "features": [
+        { "title": "Structure Analysis", "body": "Paste JSON to instantly analyze the root type, top-level field count, recursive field total and maximum nesting depth." },
+        { "title": "Field Type Statistics", "body": "Counts the type distribution of all fields (object/array/string/number/boolean/null) and shows array element type composition." },
+        { "title": "Sensitive Field Detection", "body": "Automatically detects common sensitive fields (password, token, API key, card numbers, ID numbers, phone, email) with high/notice risk levels." },
+        { "title": "Local Processing · Private", "body": "All analysis happens locally in your browser. Data is never uploaded, safe for JSON containing sensitive information." }
+      ],
+      "guide": [
+        { "title": "Step 1: Paste JSON", "body": "Paste JSON data into the input area, or click \"Load Sample\" (includes nested objects, arrays and sensitive fields)." },
+        { "title": "Step 2: Start analysis", "body": "Click \"Analyze\" to get a structure summary, type distribution and security alerts. Invalid JSON shows error line/column and context." },
+        { "title": "Step 3: Copy the result", "body": "Click \"Copy Result\" to copy the analysis summary to your clipboard for documentation or reports." }
+      ],
+      "faqs": [
+        { "question": "Is the AI JSON Analyzer free?", "answer": "Yes, completely free with no registration or usage limits." },
+        { "question": "Will my JSON be uploaded to a server?", "answer": "No. Structure analysis happens locally in your browser. Your data never leaves your device." },
+        { "question": "How is the maximum nesting depth calculated?", "answer": "The root node counts as level 1, and each level deeper adds 1. For example, {\"a\":{\"b\":1}} has a maximum depth of 3." },
+        { "question": "What rules does sensitive-field detection cover?", "answer": "Common sensitive fields: password/passwd, secret, token, apiKey, authorization, credit card numbers, ID numbers, SSN, phone, email, birthday, address — flagged as high risk or notice." }
+      ]
+    },
+    "base64-encoder": {
+      "title": "Base64 Encoder",
+      "description": "Encode and decode Base64 text (UTF-8)",
+      "seoTitle": "Base64 Encoder/Decoder - Text Conversion | AI Developer Toolbox",
+      "seoDescription": "Free online Base64 encoder and decoder: UTF-8 support for Chinese and emoji, one-click conversion, 100% browser-based.",
+      "keywords": ["Base64 encoder", "Base64 decoder", "Base64 encode", "Base64 decode", "text to Base64"],
+      "features": [
+        { "title": "Encode / Decode", "body": "Convert text to Base64 or Base64 back to text with one click, switching modes anytime." },
+        { "title": "UTF-8 & Emoji Support", "body": "Based on UTF-8 byte encoding, Chinese, Japanese, emoji and other multi-byte characters round-trip losslessly." },
+        { "title": "Invalid Input Detection", "body": "Automatically detects invalid Base64 (illegal characters, wrong padding, bad length) with clear error messages." },
+        { "title": "Local Processing · Private", "body": "All encoding/decoding happens locally in your browser. Data is never uploaded, safe for sensitive text." }
+      ],
+      "guide": [
+        { "title": "Step 1: Choose a mode", "body": "Select \"Encode → Base64\" or \"Decode → Text\" in the toolbar, or click \"Load Sample\" to try it instantly." },
+        { "title": "Step 2: Enter content", "body": "Input text or a Base64 string (encoding supports Chinese and emoji; decoding validates the format automatically)." },
+        { "title": "Step 3: Convert and copy", "body": "Click \"Encode/Decode\" for the result, then \"Copy Result\" to paste into your code or documents." }
+      ],
+      "faqs": [
+        { "question": "Is the Base64 tool free?", "answer": "Yes, completely free with no registration or usage limits." },
+        { "question": "Does it support Chinese and emoji?", "answer": "Yes. Based on UTF-8 byte encoding, Chinese, Japanese, emoji and other multi-byte characters round-trip losslessly." },
+        { "question": "Will my data be uploaded to a server?", "answer": "No. All encoding and decoding happens locally in your browser. Your data never leaves your device." },
+        { "question": "Is Base64 encryption?", "answer": "No. Base64 is a reversible encoding, not encryption, and provides no security. Never use it to protect sensitive data — use real encryption instead." }
+      ]
+    }
+  },
+  "homeFaqs": [
+    { "question": "Are all tools on AI Developer Toolbox free?", "answer": "Yes. Every tool is completely free with no registration, no login and no usage limits." },
+    { "question": "Is my data safe when using these tools?", "answer": "Absolutely. All tools run entirely in your browser — your data is processed locally and never uploaded to any server." },
+    { "question": "Do I need to install anything?", "answer": "No. All tools work in any modern browser without installation. Just open the page and use them." },
+    { "question": "How often are new tools added?", "answer": "We continuously add new developer tools. Check the All Tools page regularly, or follow the project on GitHub." },
+    { "question": "Can I use these tools on mobile?", "answer": "Yes. The site is fully responsive and works on phones, tablets and desktops." }
+  ],
+  "advantages": {
+    "title": "Why Choose AI Developer Toolbox",
+    "subtitle": "Built for developers, by developers",
+    "items": [
+      { "title": "Private & Secure", "desc": "All processing happens in your browser. Your data never leaves your device.", "icon": "shield" },
+      { "title": "Blazing Fast", "desc": "Pure client-side computation delivers results in milliseconds with zero server round-trips.", "icon": "bolt" },
+      { "title": "AI Enhanced", "desc": "AI-powered analysis helps you understand complex data structures and business meaning.", "icon": "spark" },
+      { "title": "Free · No Login", "desc": "Open-and-use, no account required, works on any device anytime.", "icon": "free" }
+    ]
+  },
+  "footer": {
+    "about": "Free developer tools for the global community. Fast, private and browser-based.",
+    "categories": "Tool Categories",
+    "aboutTitle": "About",
+    "home": "Home",
+    "whyUs": "Why Choose Us",
+    "allTools": "All Tools",
+    "copyright": "AI Developer Toolbox · Free online tools for developers"
+  },
+  "ui": {
+    "copy": "Copy Result",
+    "copied": "Copied ✓",
+    "copiedCompat": "Copied (compat mode) ✓",
+    "loadSample": "Load Sample",
+    "clear": "Clear",
+    "process": "Process",
+    "emptyInput": "Input is empty, please enter some content",
+    "inputStats": "{lines} lines · {kb} KB",
+    "inputStatsEmpty": "Input stats: —",
+    "localOnly": "All processing happens locally in your browser",
+    "toolbar": "Toolbar",
+    "output": "Output",
+    "outputPlaceholder": "Result will appear here"
+  }
+}

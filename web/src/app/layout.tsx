@@ -1,35 +1,40 @@
 import type { Metadata } from "next";
-import { SITE_CONFIG } from "@toolbox/shared";
+import { SITE_CONFIG, DEFAULT_LOCALE } from "@toolbox/shared";
+import { getSite } from "@/lib/i18n";
 import JsonLd from "@/components/seo/JsonLd";
 import "./globals.css";
 
 /**
- * 站点级 metadata：数据驱动
- * 标题模板 / 描述 / 关键词 / Open Graph / Twitter / robots 全部来自 SITE_CONFIG
+ * 站点级 metadata（默认语言 = en）
+ * 标题模板 / 描述 / 关键词 / Open Graph / Twitter 全部来自 locales en.json
+ * M2 将支持多语言：locale 通过 params 传入，此处为默认英文
  */
+const locale = DEFAULT_LOCALE;
+const site = getSite(locale);
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_CONFIG.url),
   title: {
-    default: `${SITE_CONFIG.name} - 开发者在线工具集`,
+    default: site.title,
     template: `%s | ${SITE_CONFIG.name}`,
   },
-  description: SITE_CONFIG.description,
-  keywords: [...SITE_CONFIG.keywords],
+  description: site.description,
+  keywords: [...site.keywords],
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     siteName: SITE_CONFIG.name,
-    title: `${SITE_CONFIG.name} - 开发者在线工具集`,
-    description: SITE_CONFIG.description,
-    locale: SITE_CONFIG.locale,
+    title: site.title,
+    description: site.description,
+    locale: "en_US",
     url: SITE_CONFIG.url,
   },
   twitter: {
     card: "summary",
-    title: `${SITE_CONFIG.name} - 开发者在线工具集`,
-    description: SITE_CONFIG.description,
+    title: site.title,
+    description: site.description,
   },
   robots: {
     index: true,
@@ -45,8 +50,8 @@ const jsonLd = {
       "@type": "WebSite",
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
-      description: SITE_CONFIG.description,
-      inLanguage: SITE_CONFIG.locale,
+      description: site.description,
+      inLanguage: "en",
       potentialAction: {
         "@type": "SearchAction",
         target: `${SITE_CONFIG.url}/tools?q={search_term_string}`,
@@ -57,7 +62,7 @@ const jsonLd = {
       "@type": "Organization",
       name: SITE_CONFIG.name,
       url: SITE_CONFIG.url,
-      description: SITE_CONFIG.description,
+      description: site.description,
     },
   ],
 };
@@ -68,7 +73,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <body className="min-h-screen bg-white text-slate-900 antialiased">
         <JsonLd data={jsonLd} />
         {children}

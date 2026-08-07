@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { TOOL_CONFIGS, getToolBySlug } from "@toolbox/shared";
+import { TOOL_CONFIGS, DEFAULT_LOCALE } from "@toolbox/shared";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { getLocalizedTool } from "@/lib/i18n";
 
 /** 静态导出（output: "export"）下 dynamicParams 必须为 false：未列出的 slug 一律 404 */
 export const dynamicParams = false;
@@ -21,15 +22,15 @@ export function generateStaticParams() {
   return planned.map((tool) => ({ slug: tool.slug }));
 }
 
-/** 数据驱动 metadata：seoTitle / seoDescription / keywords 来自工具配置 */
+/** 数据驱动 metadata：来自本地化工具（默认英文） */
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const tool = getToolBySlug(slug);
-  if (!tool) return { title: "工具未找到" };
+  const tool = getLocalizedTool(slug, DEFAULT_LOCALE);
+  if (!tool) return { title: "Tool not found" };
   return {
     // absolute：seoTitle 已含品牌后缀，避免与 layout template 重复追加
     title: { absolute: tool.seoTitle },
@@ -47,14 +48,14 @@ export async function generateMetadata({
   };
 }
 
-/** 工具占位页（功能待开发，D3 起逐步填充） */
+/** 工具占位页（planned 状态，功能开发中） */
 export default async function ToolPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const tool = getToolBySlug(slug);
+  const tool = getLocalizedTool(slug, DEFAULT_LOCALE);
   if (!tool) notFound();
 
   return (
@@ -62,11 +63,11 @@ export default async function ToolPage({
       <Header />
       <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-6 py-12">
         <div className="rounded-xl border border-slate-200 bg-white p-8">
-          <p className="text-sm text-slate-400">{tool.category} · 开发中</p>
+          <p className="text-sm text-slate-400">{tool.category} · In Development</p>
           <h1 className="mt-2 text-2xl font-bold text-slate-900">{tool.title}</h1>
           <p className="mt-2 text-slate-600">{tool.seoDescription}</p>
           <Link href="/" className="mt-6 inline-block text-sm text-blue-600 hover:underline">
-            ← 返回首页
+            ← Back to Home
           </Link>
         </div>
       </main>

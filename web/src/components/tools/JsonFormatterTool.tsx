@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState } from "react";
 import { formatJson, minifyJson, validateJson, isEmpty } from "@/lib/tools/json";
+import { mergeUiText, type UiText } from "@/lib/i18n/ui-text";
 
 const SAMPLE = `{
   "name": "AI Developer Toolbox",
@@ -13,8 +14,9 @@ const SAMPLE = `{
 
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
 
-/** JSON 格式化工具主体（纯客户端，数据不出浏览器） */
-export default function JsonFormatterTool() {
+/** JSON 格式化工具主体（纯客户端；t 为可选的 UI 文案字典，缺省回退英文） */
+export default function JsonFormatterTool({ t }: { t?: Partial<UiText> }) {
+  const ui = mergeUiText(t);
   const [input, setInput] = useState(SAMPLE);
   const [output, setOutput] = useState("");
   const [notice, setNotice] = useState<Notice>(null);
@@ -31,53 +33,53 @@ export default function JsonFormatterTool() {
   const run = useCallback(
     (kind: "format" | "minify") => {
       if (isEmpty(input)) {
-        setNotice({ type: "error", text: "输入为空：请先粘贴 JSON 数据" });
+        setNotice({ type: "error", text: ui.emptyInput });
         return;
       }
       const result = kind === "format" ? formatJson(input) : minifyJson(input);
       if (result.ok) {
         setOutput(result.output);
-        setNotice({ type: "success", text: kind === "format" ? "格式化完成 ✓" : "压缩完成 ✓" });
+        setNotice({ type: "success", text: kind === "format" ? "Formatted ✓" : "Minified ✓" });
       } else {
         setOutput("");
         setNotice({ type: "error", text: result.error.message });
       }
     },
-    [input],
+    [input, ui.emptyInput],
   );
 
   const validate = useCallback(() => {
     if (isEmpty(input)) {
-      setNotice({ type: "error", text: "输入为空：请先粘贴 JSON 数据" });
+      setNotice({ type: "error", text: ui.emptyInput });
       return;
     }
     const result = validateJson(input);
     setNotice(
       result.ok
-        ? { type: "success", text: "校验通过：JSON 语法合法 ✓" }
+        ? { type: "success", text: "Valid JSON ✓" }
         : { type: "error", text: result.error.message },
     );
-  }, [input]);
+  }, [input, ui.emptyInput]);
 
   const copyOutput = useCallback(async () => {
     if (!output) {
-      setNotice({ type: "info", text: "暂无输出内容可复制" });
+      setNotice({ type: "info", text: ui.emptyInput });
       return;
     }
     try {
       await navigator.clipboard.writeText(output);
-      setNotice({ type: "success", text: "已复制到剪贴板 ✓" });
+      setNotice({ type: "success", text: ui.copied });
     } catch {
       outputRef.current?.select();
       document.execCommand("copy");
-      setNotice({ type: "success", text: "已复制（兼容模式）✓" });
+      setNotice({ type: "success", text: ui.copiedCompat });
     }
-  }, [output]);
+  }, [output, ui]);
 
   const loadSample = useCallback(() => {
     setInput(SAMPLE);
     setOutput("");
-    setNotice({ type: "info", text: "已载入示例数据，点击格式化试试" });
+    setNotice({ type: "info", text: "Sample loaded — click Format to try" });
   }, []);
 
   const clearAll = useCallback(() => {
@@ -94,38 +96,38 @@ export default function JsonFormatterTool() {
           onClick={() => run("format")}
           className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
         >
-          格式化
+          Format
         </button>
         <button
           onClick={() => run("minify")}
           className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-400 hover:text-blue-600"
         >
-          压缩
+          Minify
         </button>
         <button
           onClick={validate}
           className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-emerald-400 hover:text-emerald-600"
         >
-          校验
+          Validate
         </button>
         <button
           onClick={copyOutput}
           className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-400 hover:text-blue-600"
         >
-          复制结果
+          {ui.copy}
         </button>
         <div className="ml-auto flex gap-2">
           <button
             onClick={loadSample}
             className="rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:text-blue-600"
           >
-            载入示例
+            {ui.loadSample}
           </button>
           <button
             onClick={clearAll}
             className="rounded-lg px-3 py-2 text-sm text-slate-500 transition hover:text-red-500"
           >
-            清空
+            {ui.clear}
           </button>
         </div>
       </div>
@@ -133,7 +135,7 @@ export default function JsonFormatterTool() {
       {/* 输入 / 输出 */}
       <div className="grid gap-4 p-4 lg:grid-cols-2">
         <div className="flex flex-col">
-          <label className="mb-2 text-sm font-medium text-slate-700">JSON 输入</label>
+          <label className="mb-2 text-sm font-medium text-slate-700">JSON Input</label>
           <textarea
             value={input}
             onChange={(e) => {
@@ -141,17 +143,17 @@ export default function JsonFormatterTool() {
               setNotice(null);
             }}
             spellCheck={false}
-            placeholder='粘贴 JSON，例如：{"name":"toolbox"}'
+            placeholder='Paste JSON, e.g. {"name":"toolbox"}'
             className="h-72 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
         </div>
         <div className="flex flex-col">
-          <label className="mb-2 text-sm font-medium text-slate-700">输出</label>
+          <label className="mb-2 text-sm font-medium text-slate-700">{ui.output}</label>
           <textarea
             ref={outputRef}
             value={output}
             readOnly
-            placeholder="格式化 / 压缩结果将显示在这里"
+            placeholder={ui.outputPlaceholder}
             className="h-72 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none"
           />
         </div>
@@ -161,10 +163,10 @@ export default function JsonFormatterTool() {
       <div className="flex flex-wrap items-center gap-4 border-t border-slate-200 px-4 py-3">
         <span className="text-xs text-slate-400">
           {inputStats
-            ? `输入 ${inputStats.lines} 行 · ${(inputStats.bytes / 1024).toFixed(1)} KB`
-            : "输入统计：—"}
+            ? `${inputStats.lines} lines · ${(inputStats.bytes / 1024).toFixed(1)} KB`
+            : ui.inputStatsEmpty}
         </span>
-        <span className="text-xs text-slate-400">全部在浏览器本地处理，数据不会上传</span>
+        <span className="text-xs text-slate-400">{ui.localOnly}</span>
         {notice && (
           <span
             className={`ml-auto text-sm font-medium ${

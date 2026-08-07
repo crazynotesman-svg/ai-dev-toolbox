@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
+import { mergeUiText, type UiText } from "@/lib/i18n/ui-text";
 import { explainJson, createExplainDemo, type JsonExplainResult } from "@/lib/tools/json-explain";
 
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
@@ -38,7 +39,8 @@ function StatRow({ label, value, hint }: { label: string; value: string; hint?: 
 }
 
 /** JSON 结构分析工具主体（纯客户端，数据不出浏览器） */
-export default function JsonExplainTool() {
+export default function JsonExplainTool({ t }: { t?: Partial<UiText> }) {
+  const ui = mergeUiText(t);
   const [input, setInput] = useState("");
   const [result, setResult] = useState<JsonExplainResult | null>(null);
   const [errorText, setErrorText] = useState<{ message: string; context?: string } | null>(null);
@@ -68,7 +70,7 @@ export default function JsonExplainTool() {
   /** 复制分析结果（文本形式） */
   const copyResult = useCallback(async () => {
     if (!result) {
-      setNotice({ type: "error", text: "暂无分析结果可复制" });
+      setNotice({ type: "error", text: ui.emptyInput });
       return;
     }
     const lines = [
@@ -87,13 +89,13 @@ export default function JsonExplainTool() {
     const text = lines.join("\n");
     try {
       await navigator.clipboard.writeText(text);
-      setNotice({ type: "success", text: "已复制分析结果 ✓" });
+      setNotice({ type: "success", text: ui.copied });
     } catch {
       outputRef.current?.focus();
       document.execCommand("copy");
-      setNotice({ type: "success", text: "已复制（兼容模式）✓" });
+      setNotice({ type: "success", text: ui.copiedCompat });
     }
-  }, [result]);
+  }, [result, ui]);
 
   const loadSample = useCallback(() => {
     setInput(createExplainDemo());
@@ -157,9 +159,9 @@ export default function JsonExplainTool() {
             <span className="text-xs text-slate-400">
               {inputStats
                 ? `输入 ${inputStats.lines} 行 · ${(inputStats.bytes / 1024).toFixed(1)} KB`
-                : "输入统计：—"}
+                : ui.inputStatsEmpty}
             </span>
-            <span className="text-xs text-slate-400">全部在浏览器本地处理，数据不会上传</span>
+            <span className="text-xs text-slate-400">{ui.localOnly}</span>
             {notice && (
               <span
                 className={`ml-auto text-sm font-medium ${

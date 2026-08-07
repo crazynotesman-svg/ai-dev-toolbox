@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
+import { mergeUiText, type UiText } from "@/lib/i18n/ui-text";
 import { encodeBase64, decodeBase64 } from "@/lib/tools/base64";
 
 const SAMPLE_TEXT = "Hello, AI Developer Toolbox!\n你好，开发者工具箱！🎉";
@@ -9,7 +10,8 @@ type Mode = "encode" | "decode";
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
 
 /** Base64 编解码工具主体（纯客户端，数据不出浏览器） */
-export default function Base64Tool() {
+export default function Base64Tool({ t }: { t?: Partial<UiText> }) {
+  const ui = mergeUiText(t);
   const [mode, setMode] = useState<Mode>("encode");
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
@@ -37,18 +39,18 @@ export default function Base64Tool() {
 
   const copyOutput = useCallback(async () => {
     if (!output) {
-      setNotice({ type: "info", text: "暂无输出内容可复制" });
+      setNotice({ type: "info", text: ui.emptyInput });
       return;
     }
     try {
       await navigator.clipboard.writeText(output);
-      setNotice({ type: "success", text: "已复制到剪贴板 ✓" });
+      setNotice({ type: "success", text: ui.copied });
     } catch {
       outputRef.current?.select();
       document.execCommand("copy");
-      setNotice({ type: "success", text: "已复制（兼容模式）✓" });
+      setNotice({ type: "success", text: ui.copiedCompat });
     }
-  }, [output]);
+  }, [output, ui]);
 
   const loadSample = useCallback(() => {
     setInput(SAMPLE_TEXT);
@@ -157,9 +159,9 @@ export default function Base64Tool() {
         <span className="text-xs text-slate-400">
           {inputStats
             ? `输入 ${inputStats.lines} 行 · ${(inputStats.bytes / 1024).toFixed(1)} KB`
-            : "输入统计：—"}
+            : ui.inputStatsEmpty}
         </span>
-        <span className="text-xs text-slate-400">全部在浏览器本地处理，数据不会上传</span>
+        <span className="text-xs text-slate-400">{ui.localOnly}</span>
         {notice && (
           <span
             className={`ml-auto text-sm font-medium ${

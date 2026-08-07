@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import type { ToolConfig } from "@toolbox/shared";
+import type { LocalizedTool } from "@/lib/i18n";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ToolHero from "@/components/tools/ToolHero";
@@ -12,7 +12,7 @@ import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
 const DEFAULT_INPUT_LIMIT = 10 * 1024 * 1024;
 
 /** 输入上限可读文案（单一事实源：tool.inputLimit，缺省用默认值） */
-function formatInputLimit(tool: ToolConfig): string {
+function formatInputLimit(tool: { inputLimit?: number }): string {
   const bytes = tool.inputLimit ?? DEFAULT_INPUT_LIMIT;
   if (bytes >= 1024 * 1024) return `${Math.round(bytes / 1024 / 1024)}MB`;
   if (bytes >= 1024) return `${Math.round(bytes / 1024)}KB`;
@@ -33,7 +33,7 @@ export interface ContentSectionItem {
 /**
  * 工具页通用骨架：Hero → 工具区域 → 功能介绍 → 使用教程 → FAQ → 相关工具
  * 统一注入 BreadcrumbList JSON-LD（站点级 SEO，不复制到各页）
- * 未来新工具页复用本结构，只需传入 tool 配置与内容
+ * 接收 LocalizedTool（技术元数据 + 本地化内容），语言由数据源决定
  */
 export default function ToolPageShell({
   tool,
@@ -42,7 +42,7 @@ export default function ToolPageShell({
   guide,
   faqs,
 }: {
-  tool: ToolConfig;
+  tool: LocalizedTool;
   /** 工具交互区（client component） */
   children: ReactNode;
   /** 功能介绍 */
@@ -57,8 +57,8 @@ export default function ToolPageShell({
       {/* 面包屑结构化数据：首页 / 工具 / 当前工具 */}
       <BreadcrumbJsonLd
         items={[
-          { name: "首页", path: "/" },
-          { name: "全部工具", path: "/tools" },
+          { name: "Home", path: "/" },
+          { name: "All Tools", path: "/tools" },
           { name: tool.title, path: `/tools/${tool.slug}` },
         ]}
       />
@@ -70,18 +70,18 @@ export default function ToolPageShell({
           {/* 统一公共提示：输入限制与隐私说明（站点级，所有工具生效） */}
           <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-blue-100 bg-blue-50 px-4 py-2.5 text-xs text-blue-700">
             <span className="inline-flex items-center gap-1">
-              <span aria-hidden="true">⚡</span> 支持空输入检测 · 单次输入上限 {formatInputLimit(tool)}
+              <span aria-hidden="true">⚡</span> Empty-input detection · Limit {formatInputLimit(tool)} per request
             </span>
             <span className="inline-flex items-center gap-1">
-              <span aria-hidden="true">🔒</span> 数据仅在浏览器本地处理，不会上传
+              <span aria-hidden="true">🔒</span> Data is processed locally in your browser
             </span>
           </div>
           {children}
         </section>
         {/* 功能介绍 */}
-        <ContentSection title="功能介绍" items={features} />
+        <ContentSection title="Features" items={features} />
         {/* 使用教程 */}
-        <ContentSection title="使用教程" items={guide} />
+        <ContentSection title="How to Use" items={guide} />
         {/* FAQ */}
         <FaqSection items={faqs} />
         {/* 相关工具交叉链接（SEO 内部链接） */}

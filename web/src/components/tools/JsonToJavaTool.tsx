@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
+import { mergeUiText, type UiText } from "@/lib/i18n/ui-text";
 import { jsonToJava, DEFAULT_CLASS_NAME } from "@/lib/tools/java";
 
 const SAMPLE = `{
@@ -20,7 +21,8 @@ const SAMPLE = `{
 type Notice = { type: "success" | "error" | "info"; text: string } | null;
 
 /** JSON → Java 工具主体（纯客户端，数据不出浏览器） */
-export default function JsonToJavaTool() {
+export default function JsonToJavaTool({ t }: { t?: Partial<UiText> }) {
+  const ui = mergeUiText(t);
   const [input, setInput] = useState(SAMPLE);
   const [className, setClassName] = useState(DEFAULT_CLASS_NAME);
   const [output, setOutput] = useState("");
@@ -47,18 +49,18 @@ export default function JsonToJavaTool() {
 
   const copyOutput = useCallback(async () => {
     if (!output) {
-      setNotice({ type: "info", text: "暂无输出内容可复制" });
+      setNotice({ type: "info", text: ui.emptyInput });
       return;
     }
     try {
       await navigator.clipboard.writeText(output);
-      setNotice({ type: "success", text: "已复制到剪贴板 ✓" });
+      setNotice({ type: "success", text: ui.copied });
     } catch {
       outputRef.current?.select();
       document.execCommand("copy");
-      setNotice({ type: "success", text: "已复制（兼容模式）✓" });
+      setNotice({ type: "success", text: ui.copiedCompat });
     }
-  }, [output]);
+  }, [output, ui]);
 
   const loadSample = useCallback(() => {
     setInput(SAMPLE);
@@ -147,9 +149,9 @@ export default function JsonToJavaTool() {
         <span className="text-xs text-slate-400">
           {inputStats
             ? `输入 ${inputStats.lines} 行 · ${(inputStats.bytes / 1024).toFixed(1)} KB`
-            : "输入统计：—"}
+            : ui.inputStatsEmpty}
         </span>
-        <span className="text-xs text-slate-400">全部在浏览器本地处理，数据不会上传</span>
+        <span className="text-xs text-slate-400">{ui.localOnly}</span>
         {notice && (
           <span
             className={`ml-auto text-sm font-medium ${

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ToolCategoryId, ToolConfig } from "@toolbox/shared";
+import type { ToolCategoryId } from "@toolbox/shared";
 
 /** 分类 → 主题色（Tailwind 静态类，保证可被扫描到） */
 const CATEGORY_STYLE: Record<
@@ -26,8 +26,16 @@ const CATEGORY_STYLE: Record<
   },
 };
 
+/** 卡片所需字段（来自 getLocalizedTool 合并结果） */
+interface ToolCardData {
+  slug: string;
+  category: ToolCategoryId;
+  title: string;
+  description: string;
+}
+
 /** 单个工具卡片 - 数据驱动渲染 */
-export default function ToolCard({ tool }: { tool: ToolConfig }) {
+export default function ToolCard({ tool }: { tool: ToolCardData }) {
   const style = CATEGORY_STYLE[tool.category];
   return (
     <Link

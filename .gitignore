@@ -59,9 +59,13 @@ d*-type.yml
 web/after-format.yml
 web/err.yml
 web/snap*.yml
+prod-*.yml
 
 # 调试脚本与临时产物
 .fill*.js
 .eval-output.js
 *.png
 *.log
+.tmp-*
+*.bak
+scripts/gen-*.py

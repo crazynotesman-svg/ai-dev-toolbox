@@ -1,14 +1,19 @@
 import Link from "next/link";
-import { SITE_CONFIG } from "@toolbox/shared";
+import { DEFAULT_LOCALE } from "@toolbox/shared";
+import { getDictionary } from "@/lib/i18n";
 
-/** 顶部导航 */
-const NAV_LINKS = [
-  { href: "/tools", label: "全部工具" },
-  { href: "/#categories", label: "工具分类" },
-  { href: "/#advantages", label: "使用优势" },
-];
-
+/** 顶部导航（文案来自 locales 字典，默认英文） */
 export default function Header() {
+  const dict = getDictionary(DEFAULT_LOCALE) as {
+    nav: { tools: string; categories: string; advantages: string };
+    site: { name: string };
+  };
+  const NAV_LINKS = [
+    { href: "/tools", label: dict.nav.tools },
+    { href: "/#categories", label: dict.nav.categories },
+    { href: "/#advantages", label: dict.nav.advantages },
+  ];
+
   return (
     <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-5xl items-center justify-between px-6">
@@ -16,7 +21,7 @@ export default function Header() {
           <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
             A
           </span>
-          {SITE_CONFIG.name}
+          {dict.site.name}
         </Link>
         <div className="flex items-center gap-6 text-sm text-slate-600">
           {NAV_LINKS.map((link) => (

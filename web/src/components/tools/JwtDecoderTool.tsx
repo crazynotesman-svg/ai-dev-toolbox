@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
+import { mergeUiText, type UiText } from "@/lib/i18n/ui-text";
 import { parseJwt, isJwtFormat, createDemoToken } from "@/lib/tools/jwt";
 
 type Notice = { type: "success" | "error"; text: string } | null;
@@ -16,7 +17,8 @@ function TimeRow({ label, value }: { label: string; value: string | undefined })
 }
 
 /** JWT 解析工具主体（纯客户端，token 绝不出浏览器） */
-export default function JwtDecoderTool() {
+export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
+  const ui = mergeUiText(t);
   const [input, setInput] = useState("");
   const [notice, setNotice] = useState<Notice>(null);
   const [result, setResult] = useState<ReturnType<typeof parseJwt> | null>(null);
@@ -94,7 +96,7 @@ export default function JwtDecoderTool() {
             className="h-32 w-full resize-y rounded-xl border border-slate-300 bg-slate-50 p-4 font-mono text-sm text-slate-900 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
           />
           <div className="mt-2 flex items-center gap-4">
-            <span className="text-xs text-slate-400">Token 仅在本机解析，不会发送到任何服务器</span>
+            <span className="text-xs text-slate-400">{ui.localOnly}</span>
             {notice && (
               <span
                 className={`ml-auto text-sm font-medium ${
