@@ -64,7 +64,7 @@ export default function JwtDecoderTool({ t }: { t?: Partial<UiText> }) {
             onClick={loadDemo}
             className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-blue-400 hover:text-blue-600"
           >
-            载入演示 Token
+            {ui.loadSample}
           </button>
           <button
             onClick={clearAll}

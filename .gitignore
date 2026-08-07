@@ -69,3 +69,9 @@ prod-*.yml
 .tmp-*
 *.bak
 scripts/gen-*.py
+web/.test-*.mts
+web/.test-*.mjs
+web/.t*.mjs
+web/tw-test-output.css
+web/out_d6_backup/
+.ci-logs.zip
