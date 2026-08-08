@@ -1,11 +1,12 @@
 /**
- * ToolContent — 工具页 SEO 文章型内容（MDX 数据模型）
+ * ToolContent — 工具页 SEO 文章型内容（MDX 数据模型，schema v2）
  *
  * 职责边界：
  * - 本类型只描述「内容」（Introduction / Features / Guide / Examples / Use Cases / FAQs）
- * - 不含 slug / locale / SEO metadata —— 这些属于其他系统：
+ * - 不含 slug / locale / 主要 SEO metadata —— 这些属于其他系统：
  *   - slug / category / status / inputLimit → shared（技术元数据）
  *   - title / seoTitle / seoDescription / keywords → locales（本地化展示字段）
+ * - schema v2 新增 seo.keywords（内容级附加关键词，增强而非替代 locales keywords）
  *
  * 存储：content/{locale}/tools/{slug}.mdx（frontmatter + 结构化区块）
  * 加载：web/src/lib/content/index.ts → getToolContent(locale, slug)
@@ -44,4 +45,10 @@ export interface ToolContent {
     question: string;
     answer: string;
   }[];
+
+  /** 内容级 SEO 附加数据（schema v2：增强页面 SEO，不替代 locales） */
+  seo?: {
+    /** 附加关键词（合并进页面 keywords metadata） */
+    keywords?: string[];
+  };
 }

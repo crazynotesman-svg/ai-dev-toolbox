@@ -10,6 +10,7 @@ import ContentSection from "@/components/tools/ContentSection";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import JsonLd from "@/components/seo/JsonLd";
 import ToolContentRenderer from "@/components/content/ToolContentRenderer";
 
 /** 默认输入上限（工具未配置 inputLimit 时兜底，字节） */
@@ -67,6 +68,26 @@ export default function ToolPageShell({
   const nav = getNav(locale);
   const ui = getUi(locale);
 
+  // FAQPage JSON-LD：合并 locales faqs + 内容系统 faqs（过滤空字符串），有内容才输出
+  const allFaqs = [...faqs, ...(content?.faqs ?? [])].filter(
+    (f) => f.question.trim().length > 0 && f.answer.trim().length > 0,
+  );
+  const faqJsonLd =
+    allFaqs.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: allFaqs.map((item) => ({
+            "@type": "Question",
+            name: item.question,
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: item.answer,
+            },
+          })),
+        }
+      : null;
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* 面包屑结构化数据：首页 / 工具 / 当前工具（名称本地化） */}
@@ -77,6 +98,8 @@ export default function ToolPageShell({
           { name: tool.title, path: `${prefix}/tools/${tool.slug}` },
         ]}
       />
+      {/* FAQPage JSON-LD：统一在 ToolPageShell 生成（合并 locales + content faqs），避免与 FaqSection 重复 */}
+      {faqJsonLd && <JsonLd data={faqJsonLd} />}
       <Header locale={locale} />
       <main className="flex-1">
         <ToolHero tool={tool} />
@@ -99,8 +122,8 @@ export default function ToolPageShell({
         <ContentSection title={ui.howToUse} items={guide} />
         {/* M3 内容系统：MDX 长内容（Introduction/Examples/Use Cases/扩展 FAQ）——无内容则跳过 */}
         {content && <ToolContentRenderer content={content} locale={locale} />}
-        {/* FAQ */}
-        <FaqSection items={faqs} />
+        {/* FAQ（emitJsonLd=false：JSON-LD 由 ToolPageShell 上方统一生成，避免重复） */}
+        <FaqSection items={faqs} emitJsonLd={false} locale={locale} />
         {/* 相关工具交叉链接（SEO 内部链接） */}
         <RelatedTools currentSlug={tool.slug} locale={locale} />
       </main>
