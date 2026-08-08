@@ -1,0 +1,58 @@
+---
+introduction: |
+  URL 有严格的字符规则：只有有限的字符集被允许出现，空格、中文、&、? 等特殊字符必须经过百分号编码（percent-encoding）才能在 URL 中安全传输。如果处理不当，链接、查询参数与接口请求会静默失效，而且很难排查原因。
+
+  URL 编码/解码工具可以把文本转换为 URL 安全的百分号编码格式，也能把编码后的字符串还原为可读文本，正确处理 UTF-8 编码，中文、日文与 emoji 等国际字符都能无损转换。无论是构造链接、拼接查询参数，还是查看日志中的编码字符串，都能一键完成。
+
+  整个过程在浏览器本地运行，数据不会上传到任何服务器，无需注册、完全免费。本页介绍 URL 编码与解码的核心功能、使用方法与常见问题。
+features:
+  - title: URL encode
+    description: 将文本转换为百分号编码格式，转义 URL 中不允许出现的字符，适用于链接、查询参数与表单数据。
+  - title: URL decode
+    description: 将 %20、%E4%BD%A0 等编码字符串还原为可读文本，快速查看 URL 中真正包含的内容。
+  - title: 特殊字符处理
+    description: 自动处理空格、&、?、#、中文等需要转义的字符，保证编码结果符合 URL 规范。
+  - title: UTF-8 支持
+    description: 使用 UTF-8 编码处理多字节字符，中文、日文、emoji 等国际字符都能无损编码与解码。
+guide:
+  - step: 1
+    title: 选择编码或解码
+    description: 选择"编码"将文本转为百分号编码格式，或选择"解码"将编码字符串还原为可读字符。
+  - step: 2
+    title: 输入文本
+    description: 粘贴需要处理的文本或 URL，空格、符号与国际字符会自动处理。
+  - step: 3
+    title: 复制结果
+    description: 转换结果实时显示，点击"复制"即可用于代码、链接或接口请求中。
+examples:
+  - title: 编码包含空格与符号的文本
+    input: |
+      hello world & more
+    output: |
+      hello%20world%20%26%20more
+  - title: 编码 UTF-8 国际文本
+    input: |
+      你好，世界
+    output: |
+      %E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C
+useCases:
+  - 为链接与跳转 URL 构造安全的查询参数
+  - 在将用户输入嵌入 URL 或跳转目标前先进行编码
+  - 解码日志与数据分析报告中出现的百分号编码字符串
+  - 为 Web 集成与接口调用准备表单编码的请求数据
+faqs:
+  - question: URL encode 和 decode 有什么区别？
+    answer: encode 是把文本中的特殊字符转义为百分号编码格式，使其能在 URL 中安全传输；decode 是把编码后的字符串还原为可读文本，两者互为逆操作。
+  - question: 支持中文 URL 吗？
+    answer: 支持。工具使用 UTF-8 编码，中文、日文、emoji 等非 ASCII 字符都能正确编码与解码，不会出现乱码。
+  - question: URL 编码是加密吗？
+    answer: 不是。URL 编码只是字符的转义表示，不提供任何保密性，任何人都可以解码还原原始内容，请不要用它保护敏感信息。
+  - question: 我的数据安全吗？
+    answer: 安全。所有编码与解码都在浏览器本地完成，数据不会上传到任何服务器，不会离开你的设备。
+seo:
+  keywords:
+    - URL 编码
+    - URL 解码
+    - encode URI
+    - URL 编码工具
+---

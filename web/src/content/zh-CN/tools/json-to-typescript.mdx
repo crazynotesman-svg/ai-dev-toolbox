@@ -1,0 +1,68 @@
+---
+introduction: |
+  TypeScript 已经成为现代前端与 Node.js 项目的标配，但手动为接口响应编写类型定义仍然是一件重复且容易出错的工作。每当后端返回的数据结构变化，你都需要逐字段检查类型、层层处理嵌套对象、推断数组元素类型——数据一旦复杂，手写 interface 既耗时又容易遗漏。
+
+  JSON 转 TypeScript 工具可以把这个问题简化为一键操作：粘贴一段 JSON 示例，工具会自动分析字段结构，生成对应的 TypeScript interface 或 type 定义。字符串映射为 string，数字映射为 number，嵌套对象拆分为独立的命名 interface，数组则根据元素类型自动推断，输出的代码可以直接复制到项目中使用。
+
+  整个转换过程在浏览器本地完成，数据不会上传到任何服务器，无需注册、完全免费。本页介绍工具的核心功能、使用方法与常见问题，帮助你快速用 JSON 示例生成可靠的 TypeScript 类型。
+features:
+  - title: TypeScript interface 生成
+    description: 粘贴 JSON 后一键生成匹配的 TypeScript 类型，字符串、数字、布尔值、null、数组与嵌套对象都会映射为正确的 TS 类型，无需手工编写。
+  - title: 嵌套对象处理
+    description: 嵌套对象自动拆分为独立的命名 interface，保持输出可读且类型安全，字段引用相互关联，数据的结构层次被完整保留。
+  - title: 数组类型推断
+    description: 同类型数组推断为单项类型数组（如 Item[]），混合类型数组推断为联合类型（如 (string | number)[]），保证数组中的每一个元素都被生成的类型覆盖。
+  - title: 字段结构分析
+    description: 自动分析 JSON 的完整字段结构与类型分布，帮助你直观了解接口数据结构，并生成与数据严格对应的类型定义。
+guide:
+  - step: 1
+    title: 输入 JSON 示例
+    description: 在输入框粘贴接口返回的 JSON 示例，也可以点击"载入示例"快速体验工具的转换效果。
+  - step: 2
+    title: 生成 TypeScript 类型
+    description: 点击"生成"按钮，工具自动分析字段结构并输出对应的 TypeScript interface 或 type 定义。
+  - step: 3
+    title: 复制到项目中使用
+    description: 检查生成的类型定义，点击"复制结果"即可粘贴到你的 .ts 文件中，直接导入使用。
+examples:
+  - title: 将简单 JSON 对象转换为 interface
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      export interface RootObject {
+        name: string;
+        version: number;
+        active: boolean;
+      }
+  - title: 转换包含嵌套对象与数组的 JSON
+    input: |
+      {"user":{"id":1,"roles":["admin","editor"]}}
+    output: |
+      export interface RootObject {
+        user: User;
+      }
+      export interface User {
+        id: number;
+        roles: string[];
+      }
+useCases:
+  - 前端 API 开发中，根据接口响应示例快速生成对应的 TypeScript 类型
+  - React 项目里为 useState、props 与请求返回数据定义类型，减少 any 的使用
+  - Node.js 项目中为配置文件与第三方接口响应建立类型模型
+  - 数据模型定义时，将规范 JSON 示例转换为可读的 interface 作为数据契约文档
+faqs:
+  - question: 工具支持嵌套 JSON 吗？
+    answer: 支持。嵌套对象会自动拆分为独立的命名 interface，字段引用保持关联，深层的多层嵌套结构也能完整转换。
+  - question: 支持数组类型吗？
+    answer: 支持。同类型数组会推断为单项类型数组（如 Item[]），混合类型数组会推断为联合类型（如 (string | number)[]）。
+  - question: 我的 JSON 数据会上传到服务器吗？
+    answer: 不会。解析与类型生成全部在浏览器本地完成，数据不会离开你的设备，可以放心粘贴包含敏感信息的接口示例。
+  - question: 生成的结果需要手动调整吗？
+    answer: 大多数情况下可以直接使用；对于含 null 或空对象的字段，可能需要根据业务语义将类型补充为可选字段或具体类型，工具会尽量给出合理的默认推断。
+seo:
+  keywords:
+    - JSON 转 TypeScript
+    - TypeScript 接口生成
+    - JSON 类型转换
+    - 生成 interface
+---

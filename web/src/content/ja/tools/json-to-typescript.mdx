@@ -1,0 +1,68 @@
+---
+introduction: |
+  TypeScript はフロントエンド開発の標準となっていますが、API のレスポンスに合わせて型定義を手書きする作業は今でも地味に手間がかかります。フィールドごとに型を確認し、ネストしたオブジェクトを展開し、配列の要素型を推測する——データ構造が複雑になると、手書きの interface は時間がかかるうえに型の取り違えも起きやすくなります。
+
+  JSON から TypeScript の型定義を生成できるのがこのツールです。JSON のサンプルを貼り付けるだけで、フィールド構造を自動解析し、対応する TypeScript interface または type 定義を生成します。文字列は string、数値は number にマッピングされ、ネストしたオブジェクトは独立した名前付き interface に分割、配列は要素の型から自動で推論されます。生成されたコードはそのままプロジェクトにコピーして使えます。
+
+  変換処理はすべてブラウザ内で完結し、データがサーバーに送信されることはありません。登録不要・無料でお使いいただけます。本ページでは主な機能、使い方、よくある質問を紹介します。
+features:
+  - title: TypeScript interface 生成
+    description: JSON を貼り付けるだけで型定義を自動生成。文字列・数値・真偽値・null・配列・ネストオブジェクトがすべて正しい TS 型にマッピングされます。
+  - title: ネストオブジェクトの処理
+    description: ネストしたオブジェクトは独立した名前付き interface に分割されるため、出力が読みやすく型安全。フィールドの参照関係も保たれます。
+  - title: 配列の型推論
+    description: 同種の配列は Item[] のような単一要素型に、混在する配列は (string | number)[] のようなユニオン型に推論され、全要素を型でカバーします。
+  - title: フィールド構造の分析
+    description: JSON のフィールド構成と型の分布を自動解析し、データ構造を把握したうえで正確な型定義を生成します。
+guide:
+  - step: 1
+    title: JSON のサンプルを入力
+    description: 入力欄に API レスポンスなどの JSON を貼り付けます。「サンプルを読み込む」で実際の例を試すこともできます。
+  - step: 2
+    title: TypeScript 型を生成
+    description: 「生成」ボタンをクリックすると、フィールド構造を解析して TypeScript の interface または type 定義を出力します。
+  - step: 3
+    title: プロジェクトにコピー
+    description: 生成結果を確認し、「結果をコピー」で .ts ファイルに貼り付ければ、そのまま import して利用できます。
+examples:
+  - title: シンプルな JSON オブジェクトを interface に変換
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      export interface RootObject {
+        name: string;
+        version: number;
+        active: boolean;
+      }
+  - title: ネストオブジェクトと配列を含む JSON を変換
+    input: |
+      {"user":{"id":1,"roles":["admin","editor"]}}
+    output: |
+      export interface RootObject {
+        user: User;
+      }
+      export interface User {
+        id: number;
+        roles: string[];
+      }
+useCases:
+  - API 連携時にレスポンスのサンプルから TypeScript 型をすばやく生成する
+  - React プロジェクトで useState や props、取得データの型を定義して any を減らす
+  - Node.js プロジェクトで設定ファイルや外部 API のレスポンスに型モデルを用意する
+  - データモデル定義の際に JSON のサンプルを読みやすい interface としてドキュメント化する
+faqs:
+  - question: ネストした JSON には対応していますか？
+    answer: 対応しています。ネストしたオブジェクトは自動的に独立した名前付き interface に分割され、フィールドの参照関係を保ったまま階層を変換します。
+  - question: 配列には対応していますか？
+    answer: 対応しています。同種の配列は Item[] のような単一要素型に、混在する配列は (string | number)[] のようなユニオン型に推論されます。
+  - question: JSON データはサーバーに送信されますか？
+    answer: いいえ。解析と型生成はすべてブラウザ内で実行され、データがサーバーに送信されることはありません。機密情報を含むデータも安心して利用できます。
+  - question: 生成結果は手直しが必要ですか？
+    answer: 多くの場合はそのまま使えます。null や空オブジェクトを含むフィールドだけは、業務上の意味に合わせてオプショナルや具体的な型に調整するとより正確になります。
+seo:
+  keywords:
+    - JSON TypeScript 変換
+    - TypeScript interface 生成
+    - JSON 型定義
+    - interface 生成ツール
+---
