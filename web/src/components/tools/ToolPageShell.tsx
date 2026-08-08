@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { DEFAULT_LOCALE } from "@toolbox/shared";
 import type { LocalizedTool } from "@/lib/i18n";
 import { getNav, getUi } from "@/lib/i18n";
+import type { ToolContent } from "@/lib/content/types";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ToolHero from "@/components/tools/ToolHero";
@@ -36,6 +37,7 @@ export interface ContentSectionItem {
  * 工具页通用骨架：Hero → 工具区域 → 功能介绍 → 使用教程 → FAQ → 相关工具
  * 统一注入 BreadcrumbList JSON-LD（站点级 SEO，不复制到各页）
  * 接收 LocalizedTool（技术元数据 + 本地化内容）与 locale（默认 en）
+ * content?: ToolContent —— M3 内容系统预留接入口（M3-2 接入 UI 渲染，当前只接收不渲染）
  */
 export default function ToolPageShell({
   tool,
@@ -44,6 +46,7 @@ export default function ToolPageShell({
   guide,
   faqs,
   locale = DEFAULT_LOCALE,
+  content,
 }: {
   tool: LocalizedTool;
   /** 工具交互区（client component） */
@@ -56,10 +59,14 @@ export default function ToolPageShell({
   faqs: FaqItem[];
   /** 语言（默认 en） */
   locale?: string;
+  /** M3 内容系统：SEO 长文（MDX），当前仅接收不渲染（M3-2 接入） */
+  content?: ToolContent;
 }) {
   const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
   const nav = getNav(locale);
   const ui = getUi(locale);
+  // M3-1：content 接入口已预留（类型契约就绪），渲染在 M3-2 接入；此处显式标记避免 lint unused
+  void content;
 
   return (
     <div className="flex min-h-screen flex-col">

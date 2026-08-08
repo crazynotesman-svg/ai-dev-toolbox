@@ -235,13 +235,3 @@ export function getHrefLang(locale: string, path: string): Record<string, string
   }
   return languages;
 }
-
-/* ==================== 未来扩展接口（Phase 2 MDX） ==================== */
-
-/**
- * 工具长内容（Introduction/Examples 等 SEO 文章型内容）
- * Phase 1 未引入 MDX，返回 null；Phase 2 接入 content/{lang}/tools/{slug}.mdx 后实现
- */
-export function getToolContent(): null {
-  return null;
-}
