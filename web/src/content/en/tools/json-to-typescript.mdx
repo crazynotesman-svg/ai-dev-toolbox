@@ -1,0 +1,68 @@
+---
+introduction: |
+  Converting JSON into TypeScript types is one of the most repetitive chores in modern web development. Every time an API response shape changes, you hand-write another interface: field by field, nesting level by nesting level, carefully matching the exact types the server returns. For large payloads this is slow, error-prone, and easy to get wrong in subtle ways.
+
+  The JSON to TypeScript generator at AI Developer Toolbox automates the whole process. Paste any JSON object, and the tool produces clean, ready-to-use TypeScript interface or type definitions that mirror your data exactly: strings become string, numbers become number, nested objects are split into named interfaces, and arrays are inferred with the correct element types. Everything runs locally in your browser, so your data never leaves your device.
+
+  This page explains how to convert JSON to TypeScript, what the generator handles automatically, and how to get the most out of it for your projects.
+features:
+  - title: Automatic Type Generation
+    description: Paste JSON and instantly get matching TypeScript definitions. Strings, numbers, booleans, null, arrays, and nested objects are mapped to their correct TypeScript types with no manual work.
+  - title: Nested Object Splitting
+    description: Nested objects are split into separate named interfaces, keeping the output readable and type-safe. Field references stay connected, so the structure of your data is preserved exactly.
+  - title: Smart Array Inference
+    description: Homogeneous arrays become single-element typed arrays such as Item[], while mixed arrays are inferred as union types like (string | number)[], so every element of your data is covered by the generated type.
+  - title: Custom Names and Styles
+    description: Choose the root interface name and switch between interface and type output styles to match your project conventions, then copy the result in one click.
+guide:
+  - step: 1
+    title: Paste your JSON
+    description: Type or paste the JSON payload into the input area, or load a sample to see the generator in action.
+  - step: 2
+    title: Configure the output
+    description: Set the root type name, defaulting to RootObject, and choose whether you want interface or type definitions.
+  - step: 3
+    title: Generate and copy
+    description: Press Generate Types to produce the TypeScript definition, then Copy Result to paste it straight into your .ts file.
+examples:
+  - title: Convert a simple JSON object to an interface
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      export interface RootObject {
+        name: string;
+        version: number;
+        active: boolean;
+      }
+  - title: Convert JSON with nested objects and arrays
+    input: |
+      {"user":{"id":1,"roles":["admin","editor"]}}
+    output: |
+      export interface RootObject {
+        user: User;
+      }
+      export interface User {
+        id: number;
+        roles: string[];
+      }
+useCases:
+  - Generating TypeScript types from API response samples during integration
+  - Building typed models for configuration files consumed in TypeScript projects
+  - Creating SDK payload types from JSON fixtures before writing the client code
+  - Documenting data contracts by converting canonical JSON examples into readable interfaces
+faqs:
+  - question: Is the JSON to TypeScript generator free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It runs entirely in your browser.
+  - question: Does my JSON get uploaded to a server?
+    answer: No. Parsing and type generation happen locally in your browser, so your data never leaves your device, making it safe for sensitive payloads.
+  - question: What happens when an array contains mixed element types?
+    answer: The tool infers a union type such as (number | string | boolean)[] so that every element of the array is covered by the generated TypeScript.
+  - question: Which JSON value types are supported?
+    answer: String, number, boolean, null, arrays, nested objects, and empty objects. All JSON types are mapped to their correct TypeScript equivalents.
+seo:
+  keywords:
+    - convert json to typescript
+    - generate typescript interface
+    - json to typescript converter
+    - json to ts types
+---

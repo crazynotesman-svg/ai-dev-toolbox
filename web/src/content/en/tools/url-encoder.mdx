@@ -1,0 +1,58 @@
+---
+introduction: |
+  URLs have strict rules: only a limited set of characters is allowed, and anything else such as spaces, Chinese characters, ampersands, or question marks must be percent-encoded before it can travel safely through a URL. Getting this wrong silently breaks links, query parameters, and API requests in ways that are hard to trace.
+
+  The URL Encoder/Decoder at AI Developer Toolbox encodes text into percent-encoded URL-safe format and decodes it back, handling UTF-8 correctly so international characters are preserved. Everything runs locally in your browser with no uploads, no registration, and no limits, making it a reliable helper for building links, query strings, and web integrations.
+
+  This page covers how to encode a URL, how to decode percent-encoded text, and answers common questions about URL encoding rules.
+features:
+  - title: Encode URL-safe text
+    description: Convert text into percent-encoded format suitable for use in URLs, query parameters, and form data, escaping every character that is not allowed.
+  - title: Decode percent-encoded text
+    description: Turn encoded strings such as %20 or %E4%BD%A0 back into readable text, so you can inspect what a URL really contains.
+  - title: Correct UTF-8 handling
+    description: Multi-byte characters such as Chinese, Japanese, and emoji are encoded and decoded losslessly, matching how modern browsers and servers treat URLs.
+  - title: Private and browser-based
+    description: All encoding and decoding happens locally in your browser, so your data never leaves your device.
+guide:
+  - step: 1
+    title: Choose encode or decode
+    description: Pick Encode to convert text to percent-encoded format, or Decode to turn encoded text back into readable characters.
+  - step: 2
+    title: Enter your text
+    description: Paste the text or URL you want to transform. Encoding handles spaces, symbols, and international characters automatically.
+  - step: 3
+    title: Copy the result
+    description: The converted string appears instantly and can be copied to your clipboard for use in code, links, or API requests.
+examples:
+  - title: Encode text with spaces and symbols
+    input: |
+      hello world & more
+    output: |
+      hello%20world%20%26%20more
+  - title: Encode UTF-8 international text
+    input: |
+      你好，世界
+    output: |
+      %E4%BD%A0%E5%A5%BD%EF%BC%8C%E4%B8%96%E7%95%8C
+useCases:
+  - Building safe query parameters for links and redirect URLs
+  - Encoding user input before embedding it in a URL or redirect target
+  - Decoding percent-encoded strings from logs and analytics reports
+  - Preparing form-encoded payloads for web integrations and API calls
+faqs:
+  - question: Is the URL encoder/decoder free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It works in any modern browser.
+  - question: Why are some characters encoded differently?
+    answer: URL encoding percent-encodes every byte that is not allowed in a URL. Characters like spaces become %20, and UTF-8 characters become multi-byte sequences such as %E4%BD%A0.
+  - question: Does it support Chinese and other non-ASCII text?
+    answer: Yes. The tool uses UTF-8 encoding, so Chinese, Japanese, emoji, and other international characters are encoded and decoded correctly.
+  - question: Is URL encoding the same as form encoding?
+    answer: They are similar but not identical. URL encoding uses %20 for spaces, while form encoding may use +. This tool follows standard percent-encoding rules for URLs.
+seo:
+  keywords:
+    - url encode
+    - encode url
+    - url encoder decoder
+    - percent encoding
+---

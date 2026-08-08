@@ -1,0 +1,58 @@
+---
+introduction: |
+  Unix timestamps are everywhere in backend systems: databases store them, APIs return them, and logs record them. But a raw number like 1723456789 tells most people nothing until it is converted into a readable date and time. Developers constantly switch between epoch seconds, milliseconds, and human-readable dates while debugging, testing, and building integrations.
+
+  The Timestamp Converter at AI Developer Toolbox turns a Unix timestamp into a clear local date and time in one step, and converts dates back to epoch values as well. It handles both seconds and milliseconds, shows the current timestamp instantly, and formats output in a human-friendly way. Everything runs locally in your browser, with no uploads and no registration.
+
+  This page explains how to use the timestamp converter, the difference between seconds and milliseconds, and answers common questions about epoch time.
+features:
+  - title: Convert Unix timestamp to human date
+    description: Paste an epoch value and instantly see the corresponding date and time in your local timezone, formatted for easy reading.
+  - title: Convert date to Unix timestamp
+    description: Enter a date and time and get the equivalent Unix timestamp in seconds or milliseconds, ready to use in your code.
+  - title: Seconds and milliseconds support
+    description: Handles both 10-digit second-based and 13-digit millisecond-based timestamps automatically, so you never guess which unit an API returned.
+  - title: Current timestamp helper
+    description: Copy the current Unix timestamp in one click, useful for testing, signing requests, and quick calculations.
+guide:
+  - step: 1
+    title: Choose the direction
+    description: Select whether you want to convert a timestamp to a date or a date to a timestamp.
+  - step: 2
+    title: Enter your value
+    description: Paste the Unix timestamp, or pick a date and time using the input fields.
+  - step: 3
+    title: Read and copy the result
+    description: The converted value appears instantly, and you can copy it to the clipboard for use in your code or documentation.
+examples:
+  - title: Convert a second-based timestamp
+    input: |
+      1723456789
+    output: |
+      Local date: 2024-08-12 14:39:49 (your timezone)
+  - title: Convert a millisecond-based timestamp
+    input: |
+      1723456789123
+    output: |
+      Local date: 2024-08-12 14:39:49.123 (your timezone)
+useCases:
+  - Debugging API responses that return epoch time instead of readable dates
+  - Building expiry checks for tokens and signed URLs based on Unix timestamps
+  - Converting database records between epoch storage and human-readable logs
+  - Generating current timestamps for test fixtures and signed requests
+faqs:
+  - question: Is the timestamp converter free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It works in any modern browser.
+  - question: What is the difference between seconds and milliseconds?
+    answer: Second-based timestamps have 10 digits and represent the number of seconds since the Unix epoch. Millisecond-based timestamps have 13 digits and include milliseconds. The tool detects and handles both.
+  - question: Which timezone does the converter use?
+    answer: The tool displays the result in your local timezone by default, so the value you see matches the time you would expect in your environment.
+  - question: Can I convert a date back to a timestamp?
+    answer: Yes, the reverse direction is supported. Enter a date and time and the tool returns the equivalent Unix timestamp in seconds or milliseconds.
+seo:
+  keywords:
+    - unix timestamp converter
+    - timestamp converter
+    - epoch to date
+    - convert date to timestamp
+---

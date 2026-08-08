@@ -1,0 +1,59 @@
+---
+introduction: |
+  Universally unique identifiers are the standard way to generate collision-resistant IDs across distributed systems. Whether you are creating database keys, tracking requests, naming resources, or building test fixtures, you need a fresh UUID quickly, and you need it to be truly unique every time.
+
+  The UUID Generator at AI Developer Toolbox creates version 4 UUIDs on demand, in the exact format your project expects. Generate a single ID or a whole batch, copy results in one click, and control whether they appear in lowercase or uppercase. Everything runs locally in your browser with no uploads, no registration, and no limits.
+
+  This page explains how to generate a UUID, what makes UUID v4 unique, and answers common questions about UUID formats and usage.
+features:
+  - title: Generate UUID v4
+    description: Create cryptographically random version 4 UUIDs in the standard 8-4-4-4-12 format, unique on every generation.
+  - title: Batch generation
+    description: Generate multiple UUIDs at once for test fixtures, seed data, or bulk resource creation, with results ready to copy together.
+  - title: Case control
+    description: Choose between lowercase and uppercase output to match your project conventions or database storage style.
+  - title: One-click copy
+    description: Copy a single UUID or the full batch to your clipboard instantly, no manual selection needed.
+guide:
+  - step: 1
+    title: Set your options
+    description: Choose how many UUIDs to generate and whether you want lowercase or uppercase output.
+  - step: 2
+    title: Generate
+    description: Press Generate to create the UUIDs. Each new generation produces completely fresh random values.
+  - step: 3
+    title: Copy the results
+    description: Click Copy to place a single UUID or the whole batch on your clipboard, ready to paste into code, databases, or documentation.
+examples:
+  - title: Generate a single UUID v4
+    input: |
+      (press Generate)
+    output: |
+      3f8d4c5e-9a2b-4f7c-8d1e-6a5b4c3d2e1f
+  - title: Generate a batch of two
+    input: |
+      (count: 2, lowercase)
+    output: |
+      a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+      f6e5d4c3-b2a1-4f0e-9d8c-7b6a5f4e3d2c
+useCases:
+  - Generating unique database keys for records created at runtime
+  - Building request IDs and correlation IDs for distributed tracing
+  - Creating test fixtures and seed data that require stable unique identifiers
+  - Naming resources such as files, sessions, and objects that need collision-free IDs
+faqs:
+  - question: Is the UUID generator free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It works in any modern browser.
+  - question: What is a UUID v4?
+    answer: UUID v4 is a version 4 universally unique identifier generated from random values. Its 128 bits make collisions practically impossible for normal usage.
+  - question: Are generated UUIDs truly unique?
+    answer: UUID v4 uses 122 random bits, so the chance of collision is negligible in practice, which is why it is the standard for most systems.
+  - question: Can I generate UUIDs in uppercase?
+    answer: Yes, the tool supports both lowercase and uppercase output so you can match your project or database conventions.
+seo:
+  keywords:
+    - generate uuid
+    - uuid v4 generator
+    - uuid generator online
+    - generate random uuid
+---
