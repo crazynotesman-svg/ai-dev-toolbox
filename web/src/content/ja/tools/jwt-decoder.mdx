@@ -1,0 +1,60 @@
+---
+introduction: |
+  JWT（JSON Web Token）は、サービス間で認証情報や権限情報をやり取りする標準的な形式です。トークンが期待通りに動作しないとき、最初のデバッグ手順はほぼ必ず「トークンをデコードして中身を確認する」ことです。手作業で base64url デコードや JSON 整形を行い、exp や iat の意味を解釈するのは手間がかかります。
+
+  JWT デコーダーは、貼り付けたトークンをワンクリックでデコードします。Header と Payload は読みやすい JSON として表示され、exp（有効期限）と iat（発行時刻）は現地時間に変換されて有効期限の状態も確認できます。さらに、exp の欠落や危険な alg=none などの一般的な問題を検出するセキュリティチェックも行います。処理はすべてブラウザ内で完結するため、トークンが外部に送信されることはありません。
+
+  重要な注意点として、デコードは署名検証ではありません。本ツールはトークンの内容を確認するだけで、署名の検証は行いません。署名の検証には発行サービスの秘密鍵が必要です。
+features:
+  - title: Header の確認
+    description: 標準の 3 セクション形式の JWT を自動認識し、Header のアルゴリズム（alg）やタイプ（typ）をデコードして表示します。
+  - title: Payload の確認
+    description: Payload 内のすべてのクレームを読みやすい JSON として表示し、sub や name などが何を表しているかをすぐに確認できます。
+  - title: 時間フィールドの解析
+    description: exp（有効期限）と iat（発行時刻）を自動で読み取り、現地時間に変換して有効期限の状態と残り時間を表示します。
+  - title: ブラウザ内でのローカル解析
+    description: デコード処理はすべてブラウザ内で行われ、トークンが外部に送信されないため、本番環境のトークンも安全に確認できます。
+guide:
+  - step: 1
+    title: トークンを貼り付ける
+    description: 入力欄に JWT トークンを貼り付けます。「サンプルを読み込む」でローカル生成のデモトークンも試せます。
+  - step: 2
+    title: 解析結果を確認する
+    description: 「デコード」を押すと、Header、Payload、Signature、時間解析、セキュリティチェックの結果が表示されます。
+  - step: 3
+    title: リスク箇所を確認する
+    description: 赤や黄色の警告（alg=none や期限切れなど）に注目してください。署名の検証には発行サービスの秘密鍵が必要です。
+examples:
+  - title: デモトークンの Header と Payload をデコード
+    input: |
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsaWNlIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    output: |
+      Header: {"alg":"HS256","typ":"JWT"}
+      Payload: {"sub":"1234567890","name":"Alice","iat":1516239022}
+  - title: セキュリティチェックの出力
+    input: |
+      （Header が alg=none のトークン）
+    output: |
+      高リスク: alg=none を検出しました。署名なしのため改ざん可能です。
+      注意: 本ツールはデコードのみを行い、署名は検証しません。
+useCases:
+  - 認証サービスから返された JWT のクレーム内容を確認する
+  - exp クレームを読み取り、トークンが期限切れかどうかを判断する
+  - API がトークンを拒否する原因をデバッグする
+  - トークンが持つ権限フィールドを確認し、認可範囲を把握する
+faqs:
+  - question: JWT デコーダーは無料で使えますか？
+    answer: はい。完全無料で、登録やログインは不要、利用回数制限もありません。
+  - question: トークンはサーバーに送信されますか？
+    answer: いいえ。デコード処理はすべてブラウザ内で行われ、トークンが外部に送信されることはありません。本番環境のトークンも安心して確認できます。
+  - question: このツールで署名を検証できますか？
+    answer: できません。署名の検証には発行サービスが保持する秘密鍵が必要です。本ツールはトークンの内容を表示するだけであり、デコードは署名検証ではありません。
+  - question: alg=none とは何ですか？
+    answer: alg=none はトークンが署名されていないことを意味し、誰でも改ざんできます。実際のサービスは alg=none のトークンを拒否する必要があり、本ツールはこれを高リスクとして表示します。
+seo:
+  keywords:
+    - JWT デコード
+    - JWT 解析
+    - JWT デコーダー
+    - JSON Web Token
+---
