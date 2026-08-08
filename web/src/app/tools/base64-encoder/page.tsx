@@ -4,8 +4,10 @@ import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getToolComponent } from "@/components/tools/registry";
 import JsonLd from "@/components/seo/JsonLd";
 import { getLocalizedTool, getUi, getHrefLang, getOgLocale } from "@/lib/i18n";
+import { getToolContent } from "@/lib/content";
 
 const tool = getLocalizedTool("base64-encoder", DEFAULT_LOCALE)!;
+const content = getToolContent(DEFAULT_LOCALE, "base64-encoder");
 const ToolComponent = getToolComponent("base64-encoder")!;
 
 /** 独立 metadata（数据来自 locales；M2.5：hreflang + twitter + OG 补全） */
@@ -53,7 +55,7 @@ export default function Base64EncoderPage() {
   return (
     <>
       <JsonLd data={softwareJsonLd} />
-      <ToolPageShell tool={tool} features={tool.features} guide={tool.guide} faqs={tool.faqs}>
+      <ToolPageShell tool={tool} features={tool.features} guide={tool.guide} faqs={tool.faqs} content={content}>
         <ToolComponent t={getUi(DEFAULT_LOCALE)} />
       </ToolPageShell>
     </>

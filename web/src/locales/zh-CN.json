@@ -507,6 +507,12 @@
     "output": "输出",
     "outputPlaceholder": "处理结果将显示在这里",
     "features": "功能介绍",
-    "howToUse": "使用教程"
+    "howToUse": "使用教程",
+    "introduction": "内容介绍",
+    "examples": "示例",
+    "useCases": "典型使用场景",
+    "faq": "常见问题",
+    "inputLabel": "输入",
+    "outputLabel": "输出"
   }
 }

@@ -505,6 +505,12 @@
     "output": "出力",
     "outputPlaceholder": "結果がここに表示されます",
     "features": "機能紹介",
-    "howToUse": "使い方"
+    "howToUse": "使い方",
+    "introduction": "はじめに",
+    "examples": "例",
+    "useCases": "ユースケース",
+    "faq": "よくある質問",
+    "inputLabel": "入力",
+    "outputLabel": "出力"
   }
 }

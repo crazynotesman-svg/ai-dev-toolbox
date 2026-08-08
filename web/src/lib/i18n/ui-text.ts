@@ -19,6 +19,13 @@ export interface UiText {
   /** 工具页章节标题（ToolPageShell 使用） */
   features: string;
   howToUse: string;
+  /** 内容系统章节标题（ToolContentRenderer 使用） */
+  introduction: string;
+  examples: string;
+  useCases: string;
+  faq: string;
+  inputLabel: string;
+  outputLabel: string;
 }
 
 /** 英文默认文案（兜底：任何语言缺失字段时回退英文） */
@@ -38,6 +45,12 @@ export const DEFAULT_UI_TEXT: UiText = {
   outputPlaceholder: "Result will appear here",
   features: "Features",
   howToUse: "How to Use",
+  introduction: "Introduction",
+  examples: "Examples",
+  useCases: "Use Cases",
+  faq: "FAQ",
+  inputLabel: "Input",
+  outputLabel: "Output",
 };
 
 /** 合并工具 UI 文案：显式传入优先，缺失回退英文 */

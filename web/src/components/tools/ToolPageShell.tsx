@@ -10,6 +10,7 @@ import ContentSection from "@/components/tools/ContentSection";
 import FaqSection from "@/components/tools/FaqSection";
 import RelatedTools from "@/components/tools/RelatedTools";
 import BreadcrumbJsonLd from "@/components/seo/BreadcrumbJsonLd";
+import ToolContentRenderer from "@/components/content/ToolContentRenderer";
 
 /** 默认输入上限（工具未配置 inputLimit 时兜底，字节） */
 const DEFAULT_INPUT_LIMIT = 10 * 1024 * 1024;
@@ -59,14 +60,12 @@ export default function ToolPageShell({
   faqs: FaqItem[];
   /** 语言（默认 en） */
   locale?: string;
-  /** M3 内容系统：SEO 长文（MDX），当前仅接收不渲染（M3-2 接入） */
-  content?: ToolContent;
+  /** M3 内容系统：SEO 长文（MDX frontmatter → ToolContent），存在时渲染内容区 */
+  content?: ToolContent | null;
 }) {
   const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
   const nav = getNav(locale);
   const ui = getUi(locale);
-  // M3-1：content 接入口已预留（类型契约就绪），渲染在 M3-2 接入；此处显式标记避免 lint unused
-  void content;
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -98,6 +97,8 @@ export default function ToolPageShell({
         <ContentSection title={ui.features} items={features} />
         {/* 使用教程 */}
         <ContentSection title={ui.howToUse} items={guide} />
+        {/* M3 内容系统：MDX 长内容（Introduction/Examples/Use Cases/扩展 FAQ）——无内容则跳过 */}
+        {content && <ToolContentRenderer content={content} locale={locale} />}
         {/* FAQ */}
         <FaqSection items={faqs} />
         {/* 相关工具交叉链接（SEO 内部链接） */}

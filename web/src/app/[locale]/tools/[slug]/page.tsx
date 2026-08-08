@@ -5,6 +5,7 @@ import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getToolComponent } from "@/components/tools/registry";
 import JsonLd from "@/components/seo/JsonLd";
 import { getLocalizedTool, getUi, getHrefLang, getOgLocale, localizedPath, getStaticLocales } from "@/lib/i18n";
+import { getToolContent } from "@/lib/content";
 
 /** 静态导出：动态段必须显式列出所有组合 */
 export const dynamicParams = false;
@@ -60,6 +61,9 @@ export default async function LocaleToolPage({
   const ToolComponent = getToolComponent(slug);
   if (!ToolComponent) notFound();
 
+  // M3 内容系统：读取该语言 MDX 内容（无文件 → null，页面保持原样）
+  const content = await getToolContent(locale, slug);
+
   const softwareJsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -79,7 +83,14 @@ export default async function LocaleToolPage({
   return (
     <>
       <JsonLd data={softwareJsonLd} />
-      <ToolPageShell tool={tool} features={tool.features} guide={tool.guide} faqs={tool.faqs} locale={locale}>
+      <ToolPageShell
+        tool={tool}
+        features={tool.features}
+        guide={tool.guide}
+        faqs={tool.faqs}
+        locale={locale}
+        content={content}
+      >
         <ToolComponent t={getUi(locale)} />
       </ToolPageShell>
     </>

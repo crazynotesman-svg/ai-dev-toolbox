@@ -86,6 +86,12 @@ export function getUi(locale: string) {
       outputPlaceholder: string;
       features: string;
       howToUse: string;
+      introduction: string;
+      examples: string;
+      useCases: string;
+      faq: string;
+      inputLabel: string;
+      outputLabel: string;
     };
   };
   return dict.ui;

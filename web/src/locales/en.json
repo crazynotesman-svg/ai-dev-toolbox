@@ -507,6 +507,12 @@
     "output": "Output",
     "outputPlaceholder": "Result will appear here",
     "features": "Features",
-    "howToUse": "How to Use"
+    "howToUse": "How to Use",
+    "introduction": "Introduction",
+    "examples": "Examples",
+    "useCases": "Use Cases",
+    "faq": "FAQ",
+    "inputLabel": "Input",
+    "outputLabel": "Output"
   }
 }

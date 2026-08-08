@@ -1,0 +1,75 @@
+---
+title: JSON Formatter Guide
+introduction: |
+  JSON (JavaScript Object Notation) is the de-facto standard for exchanging data between web servers, browsers, and APIs. While machines parse JSON effortlessly, the raw text produced by most API clients, logs, and build tools is often minified into a single dense line that is almost impossible for humans to read. This is where a JSON formatter becomes an essential part of every developer's toolkit.
+
+  The JSON Formatter tool at AI Developer Toolbox turns compressed, messy, or hand-written JSON into a clean, indented, and fully readable structure in a single click. It does not just beautify the text; it also validates the syntax, pinpoints exact errors with line and column numbers, and offers a minification mode for shrinking JSON before storage or transmission. Everything runs locally inside your browser, which means your data never leaves your device.
+
+  Whether you are debugging an API response, inspecting a configuration file, preparing data for a colleague, or teaching JSON fundamentals, this tool saves you minutes of manual scrolling and syntax hunting. It is free, requires no registration, and works on any modern browser across desktop and mobile devices.
+
+  Because the tool is fully client-side, there is no upload step, no server round-trip, and no artificial size limit imposed by a backend. You can paste large payloads and get instant feedback. Combined with the automatic error locator, it turns a frustrating "invalid JSON" wall of text into a precise, actionable message that tells you exactly where the problem is and what kind of mistake was made.
+
+  This guide walks through the core capabilities of the tool, shows realistic examples of formatting and minification, explains the common JSON syntax mistakes the validator catches, and answers frequently asked questions about size limits, privacy, and usage.
+features:
+  - title: Beautify JSON with clean indentation
+    description: One click converts compressed or handwritten JSON into a properly indented structure using two-space indentation. Nested objects and arrays are expanded into readable multi-line layouts, making field relationships and data shape immediately obvious at a glance.
+  - title: Validate JSON with precise error location
+    description: Every input is strictly checked against the JSON grammar. When a syntax error is found, the tool reports the error type together with the exact line and column numbers, so you can jump straight to the problematic area instead of scanning the whole document. Common issues such as missing commas, unbalanced quotes, and trailing commas are detected reliably.
+  - title: Minify JSON to reduce payload size
+    description: The minify mode strips all whitespace, indentation, and line breaks to produce a compact single-line JSON string. This is useful for shrinking configuration payloads, log output, or stored documents, and for preparing data before transmitting it over the network.
+  - title: Private and browser-based processing
+    description: All parsing, formatting, and validation happens locally in your browser. Nothing is uploaded to any server, so you can safely work with business data, access tokens, or other sensitive content without privacy concerns. The tool also works offline once loaded.
+guide:
+  - step: 1
+    title: Paste your JSON
+    description: Type or paste your JSON text into the input area. You can use the Load Sample button to quickly try the tool with a realistic example if you do not have data at hand.
+  - step: 2
+    title: Choose an action
+    description: Click Format to beautify the indentation, Minify to compress it into a single line, or Validate to check the syntax. The tool instantly reports success or highlights the exact error position with line and column numbers.
+  - step: 3
+    title: Copy the result
+    description: The output appears in the result panel. Click Copy Result to copy the formatted or minified JSON to your clipboard and paste it directly into your code, documentation, or configuration file.
+examples:
+  - title: Format a minified API response
+    input: |
+      {"name":"tool","version":"1.0.0","features":["format","validate","minify"],"meta":{"free":true,"local":true}}
+    output: |
+      {
+        "name": "tool",
+        "version": "1.0.0",
+        "features": [
+          "format",
+          "validate",
+          "minify"
+        ],
+        "meta": {
+          "free": true,
+          "local": true
+        }
+      }
+  - title: Validate and locate a syntax error
+    input: |
+      {"user":"alice","roles":["admin","editor",]}
+    output: |
+      Syntax error at line 1, column 39: trailing comma before closing bracket.
+      Remove the comma after "editor" to fix the JSON.
+useCases:
+  - Debugging raw API responses and network logs during development
+  - Cleaning up minified configuration files before editing them by hand
+  - Preparing readable JSON examples for documentation and code reviews
+  - Verifying that hand-written or generated JSON is syntactically valid before deployment
+  - Shrinking JSON payloads for storage or transmission with the minify mode
+faqs:
+  - question: Is the JSON Formatter tool free to use?
+    answer: Yes. The tool is completely free, requires no registration or login, and has no usage limits. You can use it as often as you need.
+  - question: Does my JSON data get uploaded to a server?
+    answer: No. Formatting, validation, and minification all happen locally in your browser. Your data never leaves your device, so it is safe to paste sensitive business data or access tokens.
+  - question: What happens when my JSON has a syntax error?
+    answer: The tool reports the specific error with the exact line and column numbers, plus a short explanation of the problem. Common mistakes such as missing commas, unbalanced quotes, extra trailing commas, and stray control characters are all detected and located.
+  - question: How large can the input be?
+    answer: The single-request input limit is 10 MB, which comfortably covers everyday scenarios. For unusually large files, we recommend trimming the payload into smaller sections before formatting.
+---
+
+# JSON Formatter — Deep Dive
+
+This page is the long-form companion to the JSON Formatter tool. Use the interactive tool above for instant formatting and validation, and read on for background, realistic examples, and best practices.
