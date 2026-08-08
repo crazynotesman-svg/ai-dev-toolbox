@@ -1,0 +1,60 @@
+---
+introduction: |
+  JSON Web Tokens (JWTs) are the standard way to pass identity and authorization claims between services. When a token fails to work, the first debugging step is almost always the same: decode the JWT and look at what is actually inside the header and payload. Doing this by hand means base64url-decoding segments, formatting JSON, and interpreting the exp, iat, and iss claims manually.
+
+  The JWT Decoder at AI Developer Toolbox does all of that in one step. Paste a token and get the decoded header and payload as readable JSON, a breakdown of the exp and iat timestamps, and a security check that flags common problems such as missing expiration or the dangerous alg=none value. Everything runs locally in your browser, so tokens never leave your device.
+
+  An important note: decoding a JWT is not the same as verifying it. This tool only inspects the token's contents; it does not verify the signature, which requires the secret key held by the issuing service.
+features:
+  - title: Format detection and parsing
+    description: Automatically recognizes a standard three-part JWT, decodes the header and payload into readable JSON, and displays the signature segment.
+  - title: exp and iat time analysis
+    description: Reads the expiration and issued-at claims, converts them into human-readable local time, and shows expiry status and remaining validity.
+  - title: Security checkup
+    description: Runs a quick check for common issues including missing exp, missing iat or iss, and the high-risk alg=none value, so you can spot problems fast.
+  - title: Private local parsing
+    description: All decoding happens locally in your browser. The token is never sent anywhere, making it safe to inspect real tokens from your environment.
+guide:
+  - step: 1
+    title: Paste your token
+    description: Type or paste the JWT into the input area, or load a demo token to see how the tool works with a local sample.
+  - step: 2
+    title: Decode and inspect
+    description: Press Decode Token to see the header, payload, signature, time analysis, and security check results.
+  - step: 3
+    title: Interpret the findings
+    description: Focus on the red and yellow warnings, such as alg=none or an expired token, and remember that signature verification needs the service's secret.
+examples:
+  - title: Decode a demo JWT header and payload
+    input: |
+      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFsaWNlIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+    output: |
+      Header: {"alg":"HS256","typ":"JWT"}
+      Payload: {"sub":"1234567890","name":"Alice","iat":1516239022}
+  - title: Security check output
+    input: |
+      (token with alg=none header)
+    output: |
+      ⚠ High risk: alg=none detected. The token is unsigned and can be forged.
+      Note: this tool decodes but does not verify the signature.
+useCases:
+  - Inspecting the payload of a JWT returned by an authentication service
+  - Checking whether a token has expired by reading the exp claim
+  - Debugging why an API rejects a token during development
+  - Reviewing the claims inside a token to understand what it authorizes
+faqs:
+  - question: Is the JWT decoder free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It runs entirely in your browser.
+  - question: Does my token get sent to a server?
+    answer: No. All decoding happens locally in your browser, so the token never leaves your device, making it safe for real production tokens.
+  - question: Can this tool verify the signature?
+    answer: No. Signature verification requires the secret key held by the issuing service. This tool only decodes and displays the token's contents; decoding is not the same as verification.
+  - question: What does alg=none mean?
+    answer: alg=none means the token carries no signature, so anyone can forge it. Real services must reject such tokens, and the tool flags them as high risk.
+seo:
+  keywords:
+    - jwt decoder
+    - decode jwt token
+    - inspect jwt payload
+    - json web token decoder
+---

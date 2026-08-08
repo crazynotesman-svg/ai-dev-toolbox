@@ -1,0 +1,69 @@
+---
+introduction: |
+  Converting JSON into Java classes is a constant task when integrating with REST APIs, message queues, and configuration services. Java is strongly typed, so every field in a JSON response needs a matching class with the right types, getters, setters, and collection mappings. Writing these POJOs by hand is tedious and easy to get wrong, especially when payloads contain deep nesting.
+
+  The JSON to Java generator at AI Developer Toolbox turns any JSON object into ready-to-use Java POJO classes automatically. Field types are inferred from the JSON values, nested objects are split into inner static classes, object arrays become List<Class>, and every field gets standard getter and setter methods. The generated code works out of the box with Jackson, Gson, and other serialization libraries. Everything runs locally in your browser, so your data never leaves your device.
+
+  This page explains how to convert JSON to Java, what the generator handles automatically, and answers common questions about the generated models.
+features:
+  - title: POJO class generation
+    description: Paste JSON and instantly get matching Java classes. Field types are mapped correctly, strings to String, integers to Integer or Long, decimals to Double, and booleans to Boolean.
+  - title: Nested object splitting
+    description: Nested objects are generated as inner static classes, keeping the hierarchy clear and the field references type-safe.
+  - title: List generic mapping
+    description: Object arrays become List<ClassName>, primitive arrays become List<String> or List<Integer>, and mixed arrays degrade to List<Object>, so collections are always typed.
+  - title: Getter and setter generation
+    description: Every field gets standard getXxx() and setXxx() methods following JavaBean conventions, ready to use with Jackson, Gson, and other serialization frameworks.
+guide:
+  - step: 1
+    title: Paste your JSON
+    description: Type or paste the JSON payload into the input area, or load a sample to see the generator in action.
+  - step: 2
+    title: Set the class name
+    description: Choose the root class name, defaulting to RootObject, which becomes the main class of the generated output.
+  - step: 3
+    title: Generate and copy
+    description: Press Generate Java Classes to produce the POJO code, then Copy Result to paste it directly into your Java project.
+examples:
+  - title: Generate a simple POJO
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      public class RootObject {
+        private String name;
+        private Integer version;
+        private Boolean active;
+        // getters and setters...
+      }
+  - title: Generate a model with a nested object array
+    input: |
+      {"users":[{"id":1,"name":"alice"}]}
+    output: |
+      public class RootObject {
+        private List<User> users;
+      }
+      public class User {
+        private Integer id;
+        private String name;
+      }
+useCases:
+  - Creating DTO classes for REST API clients before writing service code
+  - Building request and response models for message queue payloads
+  - Generating entity models from JSON fixtures for integration tests
+  - Preparing typed models for configuration files loaded by Spring applications
+faqs:
+  - question: Is the JSON to Java generator free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It runs entirely in your browser.
+  - question: Does my JSON data get uploaded to a server?
+    answer: No. Parsing and class generation happen locally in your browser, so your data never leaves your device.
+  - question: Are the generated classes directly usable?
+    answer: Yes. The output is a standard JavaBean with private fields and getter/setter methods, compatible with Jackson, Gson, and other serialization frameworks out of the box.
+  - question: What happens if a field name collides with a Java keyword?
+    answer: If a JSON field name conflicts with a Java keyword such as class or new, the generator appends a suffix automatically so the code still compiles.
+seo:
+  keywords:
+    - json to java converter
+    - generate java pojo from json
+    - json to java class
+    - convert json schema to java
+---

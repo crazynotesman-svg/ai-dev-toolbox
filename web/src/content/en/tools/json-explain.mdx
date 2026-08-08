@@ -1,0 +1,63 @@
+---
+introduction: |
+  Large JSON payloads are hard to understand at a glance. When an API returns hundreds of fields across many nesting levels, it takes real effort to figure out the overall structure, which field types are used, how deep the data goes, and whether anything sensitive is hiding inside. That effort happens over and over on every new integration.
+
+  The AI JSON Analyzer at AI Developer Toolbox explains a JSON document in seconds. It reports the root type, the number of top-level and total fields, the maximum nesting depth, the distribution of field types, and an analysis of array contents. It also scans for common sensitive fields such as passwords, tokens, API keys, and personal data, flagging them by risk level so you can spot data leaks before they happen. Everything runs locally in your browser, so your data never leaves your device.
+
+  This page explains how to analyze JSON structure, what the tool detects, and answers common questions about the analysis results.
+features:
+  - title: JSON structure analysis
+    description: Paste any JSON and get an instant summary of the root type, top-level field count, total recursive field count, and maximum nesting depth, giving you the full shape of the data at a glance.
+  - title: Field type statistics
+    description: See the distribution of all field types across the document, including object, array, string, number, boolean, and null, with a separate breakdown of array element types.
+  - title: Sensitive field detection
+    description: Automatically scans for common sensitive fields such as passwords, tokens, API keys, card numbers, IDs, and contact details, and flags them by high-risk or caution level.
+  - title: Local processing for privacy
+    description: All analysis happens locally in your browser, so you can safely run security checks on JSON that contains sensitive information.
+guide:
+  - step: 1
+    title: Paste your JSON
+    description: Type or paste the JSON into the input area, or load a sample that includes nested objects, arrays, and sensitive fields.
+  - step: 2
+    title: Start the analysis
+    description: Press Analyze to get the structure summary, type distribution, and security hints. Invalid JSON reports the exact line and column of the error.
+  - step: 3
+    title: Copy the summary
+    description: Click Copy Result to copy the analysis summary to your clipboard for reports or documentation.
+examples:
+  - title: Analyze a nested JSON document
+    input: |
+      {"user":{"id":1,"name":"alice","roles":["admin","editor"]},"items":[1,2,3]}
+    output: |
+      Root type: object
+      Top-level fields: 2
+      Total fields: 8
+      Max depth: 3
+      Types: object x1, array x2, string x1, number x3
+  - title: Detect sensitive fields
+    input: |
+      {"username":"alice","password":"secret123","token":"eyJhbGciOiJIUzI1NiJ9"}
+    output: |
+      ⚠ High risk: password (path: /password)
+      ⚠ High risk: token (path: /token)
+useCases:
+  - Understanding the shape of a new API response before writing client code
+  - Auditing JSON files for accidentally exposed secrets or personal data
+  - Estimating the complexity of a payload before building a parser or validator
+  - Documenting data contracts by summarizing large JSON samples
+faqs:
+  - question: Is the AI JSON analyzer free to use?
+    answer: Yes, it is completely free, requires no registration, and has no usage limits. It runs entirely in your browser.
+  - question: Does my JSON get uploaded to a server?
+    answer: No. Structure analysis happens locally in your browser, so your data never leaves your device, making it safe to analyze sensitive JSON.
+  - question: How is maximum nesting depth calculated?
+    answer: The root node counts as level 1, and every level deeper adds one. For example, {"a":{"b":1}} has a maximum depth of 3.
+  - question: Which sensitive fields does the tool detect?
+    answer: It covers common fields such as password, secret, token, apiKey, authorization, credit card numbers, national IDs, phone numbers, email, birth dates, and addresses, flagged by high-risk or caution level.
+seo:
+  keywords:
+    - explain json
+    - analyze json structure
+    - json structure analyzer
+    - understand json data
+---
