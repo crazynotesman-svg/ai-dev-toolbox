@@ -17,7 +17,8 @@
     "tools": "全部工具",
     "categories": "工具分类",
     "advantages": "使用优势",
-    "language": "语言"
+    "language": "语言",
+    "home": "首页"
   },
   "hero": {
     "badge": "{count} 个工具 · 持续上新",
@@ -504,6 +505,8 @@
     "localOnly": "全部在浏览器本地处理，数据不会上传",
     "toolbar": "工具栏",
     "output": "输出",
-    "outputPlaceholder": "处理结果将显示在这里"
+    "outputPlaceholder": "处理结果将显示在这里",
+    "features": "功能介绍",
+    "howToUse": "使用教程"
   }
 }

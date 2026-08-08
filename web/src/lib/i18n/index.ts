@@ -84,6 +84,8 @@ export function getUi(locale: string) {
       toolbar: string;
       output: string;
       outputPlaceholder: string;
+      features: string;
+      howToUse: string;
     };
   };
   return dict.ui;
@@ -174,7 +176,24 @@ export function getHome(locale: string) {
   return dict.home;
 }
 
+/** 获取导航文案（nav 区块） */
+export function getNav(locale: string) {
+  const dict = getDictionary(locale) as {
+    nav: { home: string; tools: string; categories: string; advantages: string; language: string };
+  };
+  return dict.nav;
+}
+
 /* ==================== 路径与 SEO ==================== */
+
+/**
+ * 非默认（非英文）的已启用语言 code 列表
+ * 供 [locale] 路由 generateStaticParams 使用——只生成 enabled 语言，避免硬编码
+ * （英文走根路由，不在此列表）
+ */
+export function getStaticLocales(): string[] {
+  return SUPPORTED_LOCALES.filter((l) => !l.default).map((l) => l.code);
+}
 
 /** BCP47 locale → Open Graph locale 格式映射（en_US / zh_CN / ja_JP） */
 const OG_LOCALE_MAP: Record<string, string> = {

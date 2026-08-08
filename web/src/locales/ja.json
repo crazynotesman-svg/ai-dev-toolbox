@@ -17,7 +17,8 @@
     "tools": "すべてのツール",
     "categories": "カテゴリ",
     "advantages": "選ばれる理由",
-    "language": "言語"
+    "language": "言語",
+    "home": "ホーム"
   },
   "hero": {
     "badge": "{count} ツール · 随時更新",
@@ -502,6 +503,8 @@
     "localOnly": "すべてブラウザ内でローカル処理され、データは送信されません",
     "toolbar": "ツールバー",
     "output": "出力",
-    "outputPlaceholder": "結果がここに表示されます"
+    "outputPlaceholder": "結果がここに表示されます",
+    "features": "機能紹介",
+    "howToUse": "使い方"
   }
 }

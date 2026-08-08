@@ -4,13 +4,13 @@ import { SITE_CONFIG, TOOL_CONFIGS } from "@toolbox/shared";
 import ToolPageShell from "@/components/tools/ToolPageShell";
 import { getToolComponent } from "@/components/tools/registry";
 import JsonLd from "@/components/seo/JsonLd";
-import { getLocalizedTool, getUi, getHrefLang, getOgLocale, localizedPath } from "@/lib/i18n";
+import { getLocalizedTool, getUi, getHrefLang, getOgLocale, localizedPath, getStaticLocales } from "@/lib/i18n";
 
 /** 静态导出：动态段必须显式列出所有组合 */
 export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const locales = ["zh-CN", "ja"];
+  const locales = getStaticLocales();
   const slugs = TOOL_CONFIGS.filter((t) => t.status === "live").map((t) => t.slug);
   // 生成 [locale]/[slug] 全部组合
   return locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));

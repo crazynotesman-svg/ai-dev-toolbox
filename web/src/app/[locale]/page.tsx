@@ -5,15 +5,14 @@ import Hero from "@/components/home/Hero";
 import ToolCard from "@/components/home/ToolCard";
 import Advantages from "@/components/home/Advantages";
 import FaqSection from "@/components/tools/FaqSection";
-import { getLocalizedTool, getLocalizedCategory, getHome, getHomeFaqs } from "@/lib/i18n";
+import { getLocalizedTool, getLocalizedCategory, getHome, getHomeFaqs, getStaticLocales } from "@/lib/i18n";
 
 /**
  * 多语言首页（[locale]/page.tsx）
- * 英文由根路由 app/page.tsx 承担，本路由只生成非英文语言
+ * 英文由根路由 app/page.tsx 承担，本路由只生成非英文的 enabled 语言（zh-CN/ja）
  */
 export async function generateStaticParams() {
-  // 只生成 zh-CN / ja（非英文；英文走根路由）
-  return [{ locale: "zh-CN" }, { locale: "ja" }];
+  return getStaticLocales().map((locale) => ({ locale }));
 }
 
 export default async function LocaleHomePage({

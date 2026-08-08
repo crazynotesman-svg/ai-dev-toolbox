@@ -16,6 +16,9 @@ export interface UiText {
   toolbar: string;
   output: string;
   outputPlaceholder: string;
+  /** 工具页章节标题（ToolPageShell 使用） */
+  features: string;
+  howToUse: string;
 }
 
 /** 英文默认文案（兜底：任何语言缺失字段时回退英文） */
@@ -33,6 +36,8 @@ export const DEFAULT_UI_TEXT: UiText = {
   toolbar: "Toolbar",
   output: "Output",
   outputPlaceholder: "Result will appear here",
+  features: "Features",
+  howToUse: "How to Use",
 };
 
 /** 合并工具 UI 文案：显式传入优先，缺失回退英文 */

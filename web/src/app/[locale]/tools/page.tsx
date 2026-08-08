@@ -14,6 +14,7 @@ import {
   getHome,
   getDictionary,
   localizedPath,
+  getStaticLocales,
 } from "@/lib/i18n";
 
 /** 多语言工具索引页 metadata（M2.5：全字段来自 locales + hreflang + canonical 自身） */
@@ -51,7 +52,7 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  return [{ locale: "zh-CN" }, { locale: "ja" }];
+  return getStaticLocales().map((locale) => ({ locale }));
 }
 
 export default async function LocaleToolsPage({

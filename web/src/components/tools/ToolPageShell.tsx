@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { DEFAULT_LOCALE } from "@toolbox/shared";
 import type { LocalizedTool } from "@/lib/i18n";
+import { getNav, getUi } from "@/lib/i18n";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ToolHero from "@/components/tools/ToolHero";
@@ -57,14 +58,16 @@ export default function ToolPageShell({
   locale?: string;
 }) {
   const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
+  const nav = getNav(locale);
+  const ui = getUi(locale);
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* 面包屑结构化数据：首页 / 工具 / 当前工具 */}
+      {/* 面包屑结构化数据：首页 / 工具 / 当前工具（名称本地化） */}
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", path: `${prefix}/` },
-          { name: "All Tools", path: `${prefix}/tools` },
+          { name: nav.home, path: `${prefix}/` },
+          { name: nav.tools, path: `${prefix}/tools` },
           { name: tool.title, path: `${prefix}/tools/${tool.slug}` },
         ]}
       />
@@ -85,9 +88,9 @@ export default function ToolPageShell({
           {children}
         </section>
         {/* 功能介绍 */}
-        <ContentSection title="Features" items={features} />
+        <ContentSection title={ui.features} items={features} />
         {/* 使用教程 */}
-        <ContentSection title="How to Use" items={guide} />
+        <ContentSection title={ui.howToUse} items={guide} />
         {/* FAQ */}
         <FaqSection items={faqs} />
         {/* 相关工具交叉链接（SEO 内部链接） */}
