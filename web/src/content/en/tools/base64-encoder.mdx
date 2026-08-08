@@ -1,0 +1,58 @@
+---
+introduction: |
+  Base64 encoding is one of the most widely used techniques for representing binary data as plain ASCII text. It powers email attachments, data URLs, JSON web tokens, and countless API payloads where text-based transports are required. While every language ships a built-in encoder, developers still reach for an online tool constantly: to quickly encode a string before sending it to a colleague, to decode a token they received from a service, or to verify that a piece of Base64 really decodes to what they expect.
+
+  The Base64 Encoder/Decoder at AI Developer Toolbox converts plain text to Base64 and back with full UTF-8 support, so Chinese characters, emoji, and other multi-byte text survive the round trip without corruption. Everything runs locally in your browser: your input never leaves your device, there is nothing to install, and there is no registration. The tool also validates incoming Base64 and gives you a clear error message instead of silently producing garbage when the input is malformed.
+
+  This page walks through how to encode text, how to decode Base64, what the tool checks for you, and answers the most common questions about Base64 encoding and its limits.
+features:
+  - title: Encode text to Base64 in one click
+    description: Type or paste any text and press Encode to get its Base64 representation instantly. UTF-8 encoding means English, Chinese, Japanese, emoji, and other multi-byte characters are all handled correctly, preserving the original content exactly.
+  - title: Decode Base64 back to readable text
+    description: Paste a Base64 string and switch to Decode mode to recover the original text. The decoder validates the input format first, so you get a clear error instead of corrupted output when the string is malformed.
+  - title: Strict Base64 validation with clear errors
+    description: The tool checks character set, padding, and length rules of standard Base64. If something is wrong, you get a precise explanation rather than silent failure, which saves real debugging time.
+  - title: Private and browser-based processing
+    description: All encoding and decoding happens locally in your browser with no server round trip. Your data never leaves your device, making it safe to use with sensitive text and tokens.
+guide:
+  - step: 1
+    title: Choose encode or decode mode
+    description: Use the segmented control to pick Encode (text to Base64) or Decode (Base64 to text). You can also load a sample to see the workflow in seconds.
+  - step: 2
+    title: Enter your input
+    description: Type or paste the text or Base64 string you want to convert. Encoding accepts multi-byte text such as Chinese and emoji; decoding automatically checks the format.
+  - step: 3
+    title: Convert and copy the result
+    description: Press Encode or Decode to see the output instantly, then click Copy Result to place it on your clipboard and paste it into your code, config, or message.
+examples:
+  - title: Encode a text string
+    input: |
+      Hello, World!
+    output: |
+      SGVsbG8sIFdvcmxkIQ==
+  - title: Decode Base64 with UTF-8 content
+    input: |
+      5L2g5aW977yM5LiW55WM
+    output: |
+      你好，世界
+useCases:
+  - Encoding text before embedding it in a data URL or JSON payload
+  - Decoding a JWT segment or API token to inspect its contents
+  - Preparing test fixtures for email attachments or authentication headers
+  - Verifying that a Base64 string produced by another system is valid and decodes correctly
+faqs:
+  - question: Is the Base64 encoder/decoder free to use?
+    answer: Yes, the tool is completely free, requires no registration, and has no usage limits. It works in any modern browser.
+  - question: Does it support Chinese characters and emoji?
+    answer: Yes. The tool is based on UTF-8 byte encoding, so Chinese, Japanese, emoji, and other multi-byte characters are encoded and decoded losslessly with consistent round trips.
+  - question: Is Base64 encryption?
+    answer: No. Base64 is an encoding scheme, not encryption. It is fully reversible and offers no security, so never use it to protect sensitive data. Use a proper encryption algorithm instead.
+  - question: What happens if I paste invalid Base64?
+    answer: The decoder validates the character set, padding, and length rules and reports a specific error message, so you know exactly what is wrong instead of receiving corrupted output.
+seo:
+  keywords:
+    - base64 encoder
+    - decode base64
+    - encode text
+    - convert base64 to text
+---

@@ -117,6 +117,15 @@ function parseToolContent(raw: string): ToolContent | null {
     if (content.faqs.length === 0) delete content.faqs;
   }
 
+  // seo（schema v2：内容级附加关键词，增强不替代 locales）
+  if (data.seo && typeof data.seo === "object") {
+    const seoData = data.seo as Record<string, unknown>;
+    const keywords = Array.isArray(seoData.keywords)
+      ? seoData.keywords.filter((k): k is string => typeof k === "string" && k.trim().length > 0)
+      : [];
+    if (keywords.length > 0) content.seo = { keywords };
+  }
+
   // 没有任何有效字段 → null（不产生空内容区块）
   if (Object.keys(content).length === 0) return null;
   return content;
