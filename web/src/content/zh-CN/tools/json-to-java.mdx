@@ -1,0 +1,69 @@
+---
+introduction: |
+  在与 REST API、消息队列和配置服务对接时，把 JSON 转换为 Java 类是 Java 开发者最常见的重复工作之一。Java 是强类型语言，JSON 响应中的每个字段都需要对应的类成员，并配上正确的类型、getter/setter 和集合映射。当接口返回的数据包含深层嵌套时，手写这些 POJO 既费时又容易出错。
+
+  JSON 转 Java 工具可以把任意 JSON 对象自动转换为可直接使用的 Java POJO 类：字段类型根据 JSON 值自动推断，嵌套对象拆分为内部静态类，对象数组映射为 List<Class>，每个字段都生成标准的 getter 与 setter 方法。生成的代码开箱即可配合 Jackson、Gson 等主流序列化库使用，整个过程在浏览器本地完成，数据不会上传到任何服务器。
+
+  本页介绍 JSON 转 Java 的使用方法、自动处理的细节，以及关于生成模型的常见问题，帮助你快速把 JSON 示例变成可用的 Java 数据模型。
+features:
+  - title: POJO 类生成
+    description: 粘贴 JSON 后一键生成匹配的 Java 类，字段类型自动映射：字符串对应 String、整数对应 Integer 或 Long、小数对应 Double、布尔值对应 Boolean。
+  - title: 嵌套对象处理
+    description: 嵌套对象自动生成为内部静态类，保持类的层次结构清晰，字段引用类型安全，无需手工维护多层类的关联。
+  - title: List 泛型推断
+    description: 对象数组生成 List<ClassName>，基本类型数组生成 List<String> 或 List<Integer>，混合类型数组降级为 List<Object>，集合始终有明确类型。
+  - title: Getter/Setter 生成
+    description: 每个字段都生成遵循 JavaBean 约定的 getXxx() 与 setXxx() 方法，可直接配合 Jackson、Gson 等序列化框架使用。
+guide:
+  - step: 1
+    title: 粘贴 JSON 数据
+    description: 在输入框粘贴需要转换的 JSON 示例，也可以点击"载入示例"快速体验生成效果。
+  - step: 2
+    title: 设置根类名
+    description: 指定根类名称（默认为 RootObject），它将作为生成结果的主类名。
+  - step: 3
+    title: 生成并复制
+    description: 点击"生成 Java 类"得到 POJO 代码，再点击"复制结果"直接粘贴到你的 Java 项目中。
+examples:
+  - title: 生成一个简单的 POJO
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      public class RootObject {
+        private String name;
+        private Integer version;
+        private Boolean active;
+        // getters and setters...
+      }
+  - title: 生成包含嵌套对象数组的模型
+    input: |
+      {"users":[{"id":1,"name":"alice"}]}
+    output: |
+      public class RootObject {
+        private List<User> users;
+      }
+      public class User {
+        private Integer id;
+        private String name;
+      }
+useCases:
+  - 编写服务代码前，为 REST API 客户端创建 DTO 类
+  - 为消息队列的请求与响应构建数据模型类
+  - 根据 JSON 测试夹具生成集成测试所需的实体模型
+  - 为 Spring 应用加载的配置文件准备强类型模型
+faqs:
+  - question: JSON 转 Java 工具免费吗？
+    answer: 完全免费，无需注册，也没有使用次数限制，整个过程在浏览器本地完成。
+  - question: 我的 JSON 数据会上传到服务器吗？
+    answer: 不会。解析与类生成全部在浏览器本地执行，数据不会离开你的设备。
+  - question: 生成的类可以直接使用吗？
+    answer: 可以。输出是标准的 JavaBean（私有字段 + getter/setter），开箱即兼容 Jackson、Gson 等序列化框架；具体业务逻辑需要你在类中自行补充。
+  - question: 字段名与 Java 关键字冲突怎么办？
+    answer: 如果 JSON 字段名与 class、new 等 Java 关键字冲突，生成器会自动追加后缀，保证生成的代码可以正常编译。
+seo:
+  keywords:
+    - JSON 转 Java
+    - JSON生成Java实体类
+    - JSON转POJO
+    - Java开发工具
+---

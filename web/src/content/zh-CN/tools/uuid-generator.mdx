@@ -1,0 +1,59 @@
+---
+introduction: |
+  通用唯一标识符（UUID）是分布式系统中生成低冲突标识的标准方式。无论是创建数据库主键、追踪请求、命名资源，还是构造测试数据，你都需要快速拿到一个全新的 UUID，而且希望每次生成的标识都足够独特。
+
+  UUID 生成器可以按需生成版本 4 的 UUID，格式完全符合你的项目预期：可以生成单个，也可以一次生成一批；结果一键复制；大小写可以自由控制。整个过程在浏览器本地运行，无上传、免注册、无次数限制。
+
+  本页介绍如何生成 UUID、UUID v4 的独特性原理，以及关于 UUID 格式与用途的常见问题。需要说明的是，UUID 适合作为随机标识符，不应被当作密码或密钥等安全凭据使用。
+features:
+  - title: 生成 UUID v4
+    description: 生成基于随机数的版本 4 UUID，采用标准的 8-4-4-4-12 格式，每次生成都是全新的值。
+  - title: 批量生成
+    description: 一次生成多个 UUID，适用于测试夹具、种子数据或批量创建资源，结果可整体复制。
+  - title: 大小写控制
+    description: 在大小写输出之间自由切换，以匹配项目的代码规范或数据库存储习惯。
+  - title: 一键复制
+    description: 单个 UUID 或整批结果都能一键复制到剪贴板，无需手动框选。
+guide:
+  - step: 1
+    title: 设置选项
+    description: 选择要生成的 UUID 数量，以及输出使用小写还是大写。
+  - step: 2
+    title: 生成
+    description: 点击"生成"创建 UUID，每次生成都会产生全新的随机值。
+  - step: 3
+    title: 复制结果
+    description: 点击"复制"把单个 UUID 或整批结果放入剪贴板，直接粘贴到代码、数据库或文档中。
+examples:
+  - title: 生成单个 UUID v4
+    input: |
+      （点击"生成"）
+    output: |
+      3f8d4c5e-9a2b-4f7c-8d1e-6a5b4c3d2e1f
+  - title: 批量生成两个
+    input: |
+      （数量：2，小写）
+    output: |
+      a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d
+      f6e5d4c3-b2a1-4f0e-9d8c-7b6a5f4e3d2c
+useCases:
+  - 为运行时创建的记录生成唯一数据库主键
+  - 构建分布式追踪所需的请求 ID 与关联 ID
+  - 创建需要稳定唯一标识的测试夹具与种子数据
+  - 为文件、会话、对象等资源生成无冲突的命名标识
+faqs:
+  - question: UUID 生成器免费吗？
+    answer: 完全免费，无需注册，也没有使用次数限制，在任何现代浏览器中都可以使用。
+  - question: 什么是 UUID v4？
+    answer: UUID v4 是基于随机数生成的第 4 版通用唯一标识符，128 位随机值让常规使用场景下几乎不可能发生碰撞。
+  - question: 生成的 UUID 是真正唯一的吗？
+    answer: UUID v4 使用 122 位随机位，实际碰撞概率可以忽略不计，这也是它成为大多数系统默认选择的原因。
+  - question: UUID 能用于密码或密钥吗？
+    answer: 不建议。UUID 是随机标识符，不具备密钥的保密要求，不应作为密码、API 密钥或加密密钥等安全凭据使用。
+seo:
+  keywords:
+    - UUID生成器
+    - 在线生成UUID
+    - 随机UUID
+    - UUID v4
+---

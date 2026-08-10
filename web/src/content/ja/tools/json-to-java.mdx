@@ -1,0 +1,69 @@
+---
+introduction: |
+  REST API やメッセージキュー、設定サービスと連携するとき、JSON から Java クラスを作る作業は Java 開発者にとって定番の仕事です。Java は強い型付けの言語なので、JSON レスポンスの各フィールドに対応するクラス、正しい型、getter/setter、コレクションのマッピングをすべて用意する必要があります。データが深くネストしていると、POJO を手書きするのは時間がかかるうえにミスも起きやすくなります。
+
+  JSON から Java クラスを生成できるのがこのツールです。任意の JSON オブジェクトを、そのまま使える Java の POJO クラスに自動変換します。フィールドの型は JSON の値から自動推論され、ネストしたオブジェクトは内部 static クラスに分割、オブジェクト配列は List<Class> にマッピングされ、全フィールドに標準的な getter/setter が生成されます。生成されたコードは Jackson や Gson などのシリアライズライブラリにそのまま利用できます。処理はすべてブラウザ内で完結し、データがサーバーに送信されることはありません。
+
+  本ページでは JSON から Java への変換方法、自動処理される内容、生成モデルに関するよくある質問を紹介します。
+features:
+  - title: POJO クラスの生成
+    description: JSON を貼り付けるだけで Java クラスを自動生成。文字列は String、整数は Integer や Long、小数は Double、真偽値は Boolean に正しくマッピングされます。
+  - title: ネストオブジェクトの処理
+    description: ネストしたオブジェクトは内部 static クラスとして生成され、階層がわかりやすく、フィールド参照も型安全です。
+  - title: List ジェネリクスの推論
+    description: オブジェクト配列は List<ClassName>、プリミティブ配列は List<String> や List<Integer>、混在配列は List<Object> に変換され、コレクションの型が常に明確です。
+  - title: Getter/Setter の生成
+    description: 全フィールドに JavaBean 規約に沿った getXxx() / setXxx() メソッドを生成。Jackson や Gson などのシリアライズフレームワークにそのまま使えます。
+guide:
+  - step: 1
+    title: JSON を貼り付ける
+    description: 入力欄に変換したい JSON を貼り付けます。「サンプルを読み込む」で実際の例を試すこともできます。
+  - step: 2
+    title: ルートクラス名を設定
+    description: ルートクラス名を指定します（デフォルトは RootObject）。生成結果のメインクラスになります。
+  - step: 3
+    title: 生成してコピー
+    description: 「Java クラスを生成」で POJO コードを出力し、「結果をコピー」で Java プロジェクトに直接貼り付けられます。
+examples:
+  - title: シンプルな POJO を生成
+    input: |
+      {"name":"toolbox","version":1,"active":true}
+    output: |
+      public class RootObject {
+        private String name;
+        private Integer version;
+        private Boolean active;
+        // getters and setters...
+      }
+  - title: ネストしたオブジェクト配列を含むモデルを生成
+    input: |
+      {"users":[{"id":1,"name":"alice"}]}
+    output: |
+      public class RootObject {
+        private List<User> users;
+      }
+      public class User {
+        private Integer id;
+        private String name;
+      }
+useCases:
+  - サービスコードを書く前に REST API クライアント用の DTO クラスを作成する
+  - メッセージキューのリクエスト・レスポンス用のモデルクラスを構築する
+  - JSON フィクスチャから統合テスト用のエンティティモデルを生成する
+  - Spring アプリケーションが読み込む設定ファイル用の型付きモデルを用意する
+faqs:
+  - question: JSON から Java クラスへの変換ツールは無料ですか？
+    answer: 完全に無料で、登録不要、利用回数の制限もありません。すべてブラウザ内で動作します。
+  - question: JSON データはサーバーに送信されますか？
+    answer: いいえ。解析とクラス生成はすべてブラウザ内で実行され、データがサーバーに送信されることはありません。
+  - question: 生成されたクラスはそのまま使えますか？
+    answer: はい。出力は標準の JavaBean（private フィールド + getter/setter）で、Jackson や Gson などのシリアライズフレームワークにそのまま対応します。業務ロジックは必要に応じてクラス内に追加してください。
+  - question: フィールド名が Java の予約語と衝突したらどうなりますか？
+    answer: JSON のフィールド名が class や new などの Java 予約語と衝突する場合、生成時に自動でサフィックスを付けるため、コードは問題なくコンパイルできます。
+seo:
+  keywords:
+    - JSON Java変換
+    - JSONからJavaクラス生成
+    - POJO生成
+    - JSON を Java に変換
+---
